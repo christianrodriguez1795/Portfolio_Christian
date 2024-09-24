@@ -1,0 +1,78 @@
+.scrollbarMainPortfolio::-webkit-scrollbar {
+    width: 0px;
+    height: 0px;
+}
+
+.scrollbarMain-light::-webkit-scrollbar-thumb {
+    // background-color: theme('colors.scrollBar.light.primary');
+    // background-color: rgb(230, 230, 230);
+    background-color: transparent;
+    border-radius: 3px;
+}
+
+.scrollbarMain-light::-webkit-scrollbar-track {
+    // background-color: theme('colors.scrollBar.light.secondary');
+    background-color: black;
+}
+
+.scrollbarMain-dark::-webkit-scrollbar-thumb {
+    background-color: theme('colors.scrollBar.dark.primary');
+    border-radius: 0px;
+}
+
+.scrollbarMain-dark::-webkit-scrollbar-track {
+    background-color: theme('colors.scrollBar.dark.secondary');
+}
+
+.scrollbarNav::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+}
+
+.scrollbarNav-light::-webkit-scrollbar-thumb {
+    background-color: theme('colors.scrollBar.light.primary');
+    border-radius: 0px;
+}
+
+.scrollbarNav-light::-webkit-scrollbar-track {
+    background-color: theme('colors.scrollBar.light.secondary');
+}
+
+.scrollbarNav-dark::-webkit-scrollbar-thumb {
+    background-color: theme('colors.scrollBar.dark.primary');
+    border-radius: 0px;
+}
+
+.scrollbarNav-dark::-webkit-scrollbar-track {
+    background-color: theme('colors.scrollBar.dark.secondary');
+}
+
+.scrollbarGenerico::-webkit-scrollbar {
+    width: 7px;
+    height: 7px;
+    cursor: pointer;
+}
+
+.scrollbarGenerico-light::-webkit-scrollbar-thumb {
+    // background-color: theme('colors.scrollBar.light.primary');
+    // background-color: rgb(230, 230, 230);
+    background-color: black;
+    border-radius: 0px;
+}
+
+.scrollbarGenerico-light::-webkit-scrollbar-track {
+    // background-color: theme('colors.scrollBar.light.secondary');
+    background-color: white;
+}
+
+.scrollbarGenerico-dark::-webkit-scrollbar-thumb {
+    // background-color: theme('colors.scrollBar.light.primary');
+    // background-color: rgb(230, 230, 230);
+    background-color: rgb(255, 255, 255);
+    // border-radius: 3px;
+}
+
+.scrollbarGenerico-dark::-webkit-scrollbar-track {
+    // background-color: theme('colors.scrollBar.light.secondary');
+    background-color: rgb(0, 0, 0);
+}

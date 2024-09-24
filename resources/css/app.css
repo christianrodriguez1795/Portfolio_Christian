@@ -1,0 +1,184 @@
+@charset "UTF-8";
+@import url("https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  box-shadow: 0 0 0 1000px white inset !important;
+  -webkit-text-fill-color: inherit !important;
+}
+
+/* Estilos para modo oscuro */
+.dark input:-webkit-autofill,
+.dark input:-webkit-autofill:hover,
+.dark input:-webkit-autofill:focus,
+.dark input:-webkit-autofill:active {
+  -webkit-text-fill-color: white !important;
+  box-shadow: 0 0 0 1000px #2c2c2c inset !important;
+}
+
+.video-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.video-background {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+  filter: invert(100%) hue-rotate(280deg);
+  /* Invertir colores por defecto */
+  opacity: 0.3;
+}
+
+.dark .video-background {
+  filter: none;
+  /* Quitar inversión de colores en modo oscuro */
+}
+
+.video-container::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(to top, rgb(255, 255, 255), rgba(0, 0, 0, 0) 40%), linear-gradient(to bottom, rgb(255, 255, 255), rgba(0, 0, 0, 0) 40%), linear-gradient(to left, rgb(255, 255, 255), rgba(0, 0, 0, 0) 40%), linear-gradient(to right, rgb(255, 255, 255), rgba(0, 0, 0, 0) 40%);
+  z-index: 1;
+  pointer-events: none;
+  /* Permitir que los clics pasen a través del pseudo-elemento */
+}
+
+.dark .video-container::after {
+  background: linear-gradient(to top, rgb(0, 0, 0), rgba(0, 0, 0, 0) 40%), linear-gradient(to bottom, rgb(0, 0, 0), rgba(0, 0, 0, 0) 40%), linear-gradient(to left, rgb(0, 0, 0), rgba(0, 0, 0, 0) 40%), linear-gradient(to right, rgb(0, 0, 0), rgba(0, 0, 0, 0) 40%);
+}
+
+.content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.scrollbarMainPortfolio::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
+
+.scrollbarMain-light::-webkit-scrollbar-thumb {
+  background-color: transparent;
+  border-radius: 3px;
+}
+
+.scrollbarMain-light::-webkit-scrollbar-track {
+  background-color: black;
+}
+
+.scrollbarMain-dark::-webkit-scrollbar-thumb {
+  background-color: theme("colors.scrollBar.dark.primary");
+  border-radius: 0px;
+}
+
+.scrollbarMain-dark::-webkit-scrollbar-track {
+  background-color: theme("colors.scrollBar.dark.secondary");
+}
+
+.scrollbarNav::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+.scrollbarNav-light::-webkit-scrollbar-thumb {
+  background-color: theme("colors.scrollBar.light.primary");
+  border-radius: 0px;
+}
+
+.scrollbarNav-light::-webkit-scrollbar-track {
+  background-color: theme("colors.scrollBar.light.secondary");
+}
+
+.scrollbarNav-dark::-webkit-scrollbar-thumb {
+  background-color: theme("colors.scrollBar.dark.primary");
+  border-radius: 0px;
+}
+
+.scrollbarNav-dark::-webkit-scrollbar-track {
+  background-color: theme("colors.scrollBar.dark.secondary");
+}
+
+.scrollbarGenerico::-webkit-scrollbar {
+  width: 7px;
+  height: 7px;
+  cursor: pointer;
+}
+
+.scrollbarGenerico-light::-webkit-scrollbar-thumb {
+  background-color: black;
+  border-radius: 0px;
+}
+
+.scrollbarGenerico-light::-webkit-scrollbar-track {
+  background-color: white;
+}
+
+.scrollbarGenerico-dark::-webkit-scrollbar-thumb {
+  background-color: rgb(255, 255, 255);
+}
+
+.scrollbarGenerico-dark::-webkit-scrollbar-track {
+  background-color: rgb(0, 0, 0);
+}
+
+.toggle {
+  background-color: white;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  box-shadow: 0 0 50px 20px rgba(0, 0, 0, 0.1);
+  line-height: 1;
+}
+
+.input {
+  display: none;
+}
+
+.icon {
+  grid-column: 1/1;
+  grid-row: 1/1;
+  transition: transform 500ms;
+}
+
+.icon--moon {
+  transition-delay: 200ms;
+}
+
+.icon--sun {
+  transform: scale(0);
+}
+
+#switch:checked + .icon--moon {
+  transform: rotate(360deg) scale(0);
+}
+
+#switch:checked ~ .icon--sun {
+  transition-delay: 200ms;
+  transform: scale(1) rotate(360deg);
+}
