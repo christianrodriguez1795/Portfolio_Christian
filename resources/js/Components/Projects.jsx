@@ -69,11 +69,11 @@ const Projects = ({ proyectos = [] }) => {
     };
 
     if (!allProyectos.length) {
-        return <div className="text-center py-8">No hay proyectos disponibles.</div>;
+        return (<div data-aos="fade-up" className="text-center py-8 flex-grow">No hay proyectos disponibles.</div>);
     }
 
     return (
-        <div className="w-full px-4 flex flex-col flex-grow">
+        <div className="w-full px-4 flex flex-col gap-8 flex-grow">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {paginatedProjects.map((proyecto, index) => {
                     const row = Math.floor(index / 3);
@@ -115,7 +115,7 @@ const Projects = ({ proyectos = [] }) => {
                 })}
             </div>
             {totalPages > 1 && (
-                <div data-aos="fade-up" className="pagination flex justify-center pt-8 space-x-2 ">
+                <div data-aos="fade-up" className="pagination flex justify-center space-x-2 ">
                     <a
                         href="#"
                         onClick={(e) => handlePaginationClick(Math.max(1, currentPage - 1), e)}

@@ -12,7 +12,7 @@ const SoftSkills = () => {
         <div className="flex flex-col gap-3 flex-grow">
             <div className="text-xs md:text-[20px] flex flex-wrap gap-1 md:gap-3 justify-center overflow-y-auto touch-pan-y">
                 {softSkills.map((skill) => (
-                    <div key={skill} className="bg-black text-white dark:bg-white dark:text-black px-2 py-1 rounded text-center">
+                    <div key={skill} className="bg-black text-white dark:bg-white dark:text-black px-2 py-1 rounded text-center font-semibold">
                         {skill}
                     </div>
                 ))}

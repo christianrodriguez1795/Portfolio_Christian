@@ -16,10 +16,10 @@ export const educacion = [
         aosDelay: 1500,
     },
     {
-        titulo: 'Asignaturas del Grado en Ing. Mecánica',
+        titulo: 'Asignaturas del Grado en Ingeniería Mecánica',
         institucion: 'Universidad Politécnica de Huelva',
-        fecha: '09/2019 - 06/2021',
-        descripcion: 'Especialización en automatización y sistemas robóticos industriales.',
+        // fecha: '09/2019 - 06/2021',
+        descripcion: 'Estudios centrados en mecánica aplicada, diseño de maquinaria, termodinámica y control de procesos industriales.',
         aosDelay: 1500,
     }
 ];
@@ -32,7 +32,6 @@ export const experienciaLaboral = [
         aosDelay: 1000,
     },
 ];
-
 
 export const socialLinks = [
     {

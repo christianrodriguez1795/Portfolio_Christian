@@ -35,10 +35,10 @@ const InertiaAppWrapper = ({ App, props }) => {
             }
         };
         matchDark.addEventListener('change', handleChange);
-    
+
         return () => matchDark.removeEventListener('change', handleChange);
     }, []); // Asegúrate de tener el arreglo de dependencias vacío si no dependes de ninguna variable externa
-    
+
     useEffect(() => {
         setThemeClass(darkMode);
     }, [darkMode]);
@@ -46,6 +46,7 @@ const InertiaAppWrapper = ({ App, props }) => {
     useEffect(() => {
         AOS.init({
             duration: 1000,
+            offset: 50,
         });
         return () => AOS.refresh();
     }, []);

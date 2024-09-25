@@ -12,6 +12,14 @@ export default {
     darkMode: 'class',
     theme: {
         extend: {
+            animation: {
+                'bounce-slow': 'bounce 2s infinite', // Cambia la velocidad de bounce a 2 segundos
+                'bounce-fast': 'bounce 0.5s infinite', // Una versión más rápida de bounce
+            },
+            spacing: {
+                'ws-narrow': '-2em', 
+                'hyphens': 'auto'// Espacio ajustado entre palabras
+            },
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
                 // sans: ['Inter', ...defaultTheme.fontFamily.sans],

@@ -46,14 +46,13 @@ class ProjectController extends Controller
                 $imageFile = $request->file('image');
 
                 // Define la ruta de almacenamiento
-                $projectFolderPath = '/storage/projects/' . $project->id . '/images';
+                $projectFolderPath = 'projects/' . $project->id . '/images';
                 $imageName = 'portada-' . $project->id . '.' . $imageFile->getClientOriginalExtension();
 
-                // Verifica si el directorio ya existe, si no, créalo
-                if (!Storage::exists($projectFolderPath)) {
-                    Storage::makeDirectory($projectFolderPath);
+                // Verifica si el directorio ya existe, si no, créalo en el disco 'public'
+                if (!Storage::disk('public')->exists($projectFolderPath)) {
+                    Storage::disk('public')->makeDirectory($projectFolderPath);
                 }
-
                 // Almacena la nueva imagen en la carpeta especificada
                 $path = $imageFile->storeAs($projectFolderPath, $imageName, 'public');
 
