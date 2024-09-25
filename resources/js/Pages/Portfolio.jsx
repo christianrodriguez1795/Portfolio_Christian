@@ -150,7 +150,7 @@ export default function Portfolio({ auth, proyectos }) {
                     </div>
                 </SectionContainer>
 
-                <SectionContainer ref={el => sectionsRef.current[1] = el} title={'SOBRE MÍ'} className="section lg:h-screen flex justify-center">
+                <SectionContainer id="about" ref={el => sectionsRef.current[1] = el} title={'SOBRE MÍ'} className="section lg:h-screen flex justify-center">
                     <div className='flex flex-col gap-6 flex-grow'>
                         <div className='grid grid-cols-1 lg:grid-cols-2 gap-3 md:gap-6'>
                             <img data-aos="fade-right" className='w-full lg:h-full object-cover rounded-md' src="/storage/Foto_Generica_Sobre_Mi.jpg" alt="Christian Rodríguez" />
@@ -182,7 +182,7 @@ export default function Portfolio({ auth, proyectos }) {
                 </SectionContainer>
 
 
-                <SectionContainer ref={el => sectionsRef.current[2] = el} title={'EDUCACIÓN'} className="section lg:h-screen flex flex-col justify-center items-center">
+                <SectionContainer id="education" ref={el => sectionsRef.current[2] = el} title={'EDUCACIÓN'} className="section lg:h-screen flex flex-col justify-center items-center">
                     <div className='grid grid-cols-1 md:grid-cols-2 lg:px-44 gap-4 md:gap-20'>
                         <div className='flex flex-col gap-4 md:gap-12  w-full'>
                             <div data-aos="fade-up" className="text-xl md:text-4xl font-bold text-center">Formación Académica</div>
@@ -239,7 +239,7 @@ export default function Portfolio({ auth, proyectos }) {
                 </SectionContainer>
 
 
-                <SectionContainer ref={el => sectionsRef.current[3] = el} title={'HABILIDADES'} className="section lg:h-screen flex justify-center items-center">
+                <SectionContainer id="skills" ref={el => sectionsRef.current[3] = el} title={'HABILIDADES'} className="section lg:h-screen flex justify-center items-center">
                     <div className='flex flex-col gap-6 md:gap-14 flex-grow lg:px-44'>
                         <div className='flex flex-col gap-6'>
                             <div data-aos="fade-down" className='text-3xl text-center font-bold '>Hard</div>
@@ -262,12 +262,12 @@ export default function Portfolio({ auth, proyectos }) {
                 </SectionContainer>
 
 
-                <SectionContainer ref={el => sectionsRef.current[4] = el} title={'PROYECTOS'} className="section lg:h-screen flex ">
+                <SectionContainer id="projects" ref={el => sectionsRef.current[4] = el} title={'PROYECTOS'} className="section lg:h-screen flex ">
                     <Proyectos proyectos={proyectos} />
                 </SectionContainer>
 
 
-                <SectionContainer ref={el => sectionsRef.current[5] = el} title={'CONTACTO'} className="section lg:h-screen justify-center items-center">
+                <SectionContainer id="contact" ref={el => sectionsRef.current[5] = el} title={'CONTACTO'} className="section lg:h-screen justify-center items-center">
                     <div className='flex h-full flex-col gap-8 md:gap-0 flex-grow justify-between items-center'>
                         <div className='max-w-2xl flex flex-col items-center text-center'>
                             <h2 data-aos="fade-up" data-aos-duration='1200' className='text-lg md:text-3xl font-bold'>

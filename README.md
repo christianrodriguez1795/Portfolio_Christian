@@ -58,7 +58,7 @@ Este comando creará un enlace simbólico que apunta al almacenamiento público 
 
 ## Contacto
 
-Si tienes una idea o un proyecto en mente, no dudes en contactarme para trabajar juntos y darle vida a tus ideas. Puedes hacerlo directamente a través del formulario en [mi portafolio](https://christianrodriguezdev.es/contact).
+Si tienes una idea o un proyecto en mente, no dudes en contactarme para trabajar juntos y darle vida a tus ideas. Puedes hacerlo directamente a través del formulario en [mi portafolio](https://christianrodriguezdev.es/#contact).
 
 ---
 
