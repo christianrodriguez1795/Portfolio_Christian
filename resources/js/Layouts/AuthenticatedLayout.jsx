@@ -107,7 +107,7 @@ export default function AuthenticatedLayout({ header, children }) {
         <div onMouseEnter={() => setDrawerOpen(true)} onMouseLeave={() => setDrawerOpen(false)} >
             <ul className="py-2">
                 {[
-                    { text: 'Panel de Control', icon: <DashboardIcon />, link: '/dashboard' },
+                    { text: 'Panel de Control', icon: <DashboardIcon />, link: '/admin' },
                     { text: 'Mensajes', icon: <MessageIcon />, link: '/messages' },
                     { text: 'Proyectos', icon: <AssignmentIcon />, link: '/projects' },
                     { text: 'Curriculum', icon: <DescriptionIcon />, link: '/curriculum' },
