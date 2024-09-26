@@ -65,7 +65,7 @@ export default function DeleteUserForm({ className = '' }) {
             </button>
 
             <Modal show={confirmingUserDeletion} onClose={closeModal} >
-                <form onSubmit={deleteUser} className="p-6 bg-white dark:bg-gray-900 border dark:border-white border-gray-300 shadow-md  sm:rounded-lg">
+                <form onSubmit={deleteUser} className="p-6 bg-white dark:bg-[#2c2c2c] border dark:border-[#2c2c2c] border-gray-300 shadow-md  sm:rounded-lg">
                     <h2 className="text-lg font-medium text-gray-900 dark:text-white">
                         ¿Estás seguro de que deseas eliminar tu cuenta?
                     </h2>
@@ -75,7 +75,7 @@ export default function DeleteUserForm({ className = '' }) {
                         Por favor, ingresa tu contraseña para confirmar que deseas eliminar tu cuenta de forma permanente.
                     </p>
 
-                    <div className="mt-6">
+                    {/* <div className="mt-6">
                         <InputLabel htmlFor="password" value="Contraseña" className="sr-only" />
 
                         <TextInput
@@ -91,6 +91,27 @@ export default function DeleteUserForm({ className = '' }) {
                         />
 
                         <InputError message={errors.password} className="mt-2" />
+                    </div> */}
+
+                    <div className="relative flex-grow mt-4">
+                        <input
+                            type='password'
+                            id="password"
+                            name="password"
+                            value={data.password}
+                            onChange={(e) => setData('password', e.target.value)}
+                            required
+                            className="peer pl-0 p-3 pt-5 w-full border-b-2 border-t-0 border-l-0 border-r-0 
+                            focus:outline-none focus:ring-0 border-black focus:border-gray-300 dark:focus:border-gray-300 
+                            dark:border-white bg-transparent dark:text-white 
+                            placeholder-black dark:placeholder-white"
+                            placeholder="Contraseña"
+                        />
+                        {errors.password && (
+                            <Tooltip title={errors.password} arrow placement="top-end" sx={{ backgroundColor: 'white' }}>
+                                <FontAwesomeIcon icon={faExclamationCircle} className="absolute right-6 top-[23px] text-red-600" />
+                            </Tooltip>
+                        )}
                     </div>
 
                     <Box sx={{ display: 'flex', justifyContent: 'flex-end', gap: 2, mt: 6 }}>

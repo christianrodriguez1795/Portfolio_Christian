@@ -73,7 +73,7 @@ const Dashboard = () => {
   const CustomTooltip = ({ payload, label, active }) => {
     if (active && payload && payload.length) {
       return (
-        <div style={{ backgroundColor: darkMode ? '#272727' : 'white', border: darkMode ? '1px solid white' : '1px solid black' , borderRadius: '5px' }} >
+        <div style={{ backgroundColor: darkMode ? '#272727' : 'white', border: darkMode ? '1px solid white' : '1px solid black', borderRadius: '5px' }} >
           <p style={{ color: darkMode ? '#fff' : '#000' }} className='border-b border-black dark:border-white px-3 py-2 text-center'>{`${label}`}</p>
           <p style={{ color: darkMode ? '#fff' : '#000' }} className='px-3 py-2 text-center' >{`${payload[0].value} `} </p>
         </div>
@@ -102,7 +102,7 @@ const Dashboard = () => {
                     <XAxis dataKey="name" tick={{ fill: darkMode ? 'white' : 'black' }} stroke={darkMode ? 'white' : 'black'} />
                     <YAxis tick={{ fill: darkMode ? 'white' : 'black' }} stroke={darkMode ? 'white' : 'black'} />
                     <Tooltip content={<CustomTooltip />} />
-                    <Bar dataKey="visitas" fill={darkMode ? 'white' : 'black'} activeBar={{ fill: darkMode ? '#7eb2ff' : '#7eb2ff' }}/>
+                    <Bar dataKey="visitas" fill={darkMode ? 'white' : 'black'} activeBar={{ fill: darkMode ? '#7eb2ff' : '#7eb2ff' }} />
                   </BarChart>
                 </ResponsiveContainer>
               </div>

@@ -114,7 +114,7 @@ const Projects = ({ auth, projects }) => {
                 <TableRow>
                   <TableCell align="left" className='dark:text-white' style={{ fontWeight: 'bold' }}>Imagen</TableCell>
                   <TableCell align="left" className='dark:text-white' style={{ fontWeight: 'bold' }}>Titulo</TableCell>
-                  <TableCell align="left" className='dark:text-white'sx={{ fontWeight: 'bold', display: { xs: 'none', md: 'table-cell', } }}>Descripcion</TableCell>
+                  <TableCell align="left" className='dark:text-white' sx={{ fontWeight: 'bold', display: { xs: 'none', md: 'table-cell', } }}>Descripcion</TableCell>
                   <TableCell align="left" className='dark:text-white' sx={{ fontWeight: 'bold', display: { xs: 'none', md: 'table-cell', } }}>URL</TableCell>
                   <TableCell align="left" className='dark:text-white' style={{ fontWeight: 'bold' }}>Acciones</TableCell>
                 </TableRow>
@@ -126,7 +126,7 @@ const Projects = ({ auth, projects }) => {
                       <TableCell align="left">{project.image && <img src={`${project.image}`} alt={project.title} style={{ width: 50, height: 50 }} className='rounded-md' />}</TableCell>
                       <TableCell align="left" className='dark:text-white'>{project.title}</TableCell>
                       <TableCell align="left" className='dark:text-white' sx={{ display: { xs: 'none', md: 'table-cell', } }}>{project.description}</TableCell>
-                      <TableCell align="left" className='dark:text-white' sx={{ display: { xs: 'none', md: 'table-cell', } }}>{project.url && <Link href={project.url} target="_blank">Visit</Link>}</TableCell>
+                      <TableCell align="left" className='dark:text-white' sx={{ display: { xs: 'none', md: 'table-cell', } }}>{project.url && <a href={project.url} target="_blank">Visit</a>}</TableCell>
                       <TableCell align="left">
                         <IconButton component={Link} href={route('projects.edit', project.id)} color="primary" sx={{ mr: 2 }}>
                           <FontAwesomeIcon icon={faEdit} />

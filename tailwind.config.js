@@ -17,7 +17,7 @@ export default {
                 'bounce-fast': 'bounce 0.5s infinite', // Una versión más rápida de bounce
             },
             spacing: {
-                'ws-narrow': '-2em', 
+                'ws-narrow': '-2em',
                 'hyphens': 'auto'// Espacio ajustado entre palabras
             },
             fontFamily: {
