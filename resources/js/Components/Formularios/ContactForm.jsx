@@ -182,8 +182,8 @@ const ContactForm = ({ setSnackbar }) => {
                 <button data-aos="fade-up"
                     type="submit"
                     className="mt-3 flex items-center justify-center w-full p-3 font-semibold text-white bg-black rounded-lg 
-                    transition-colors duration-300 ease-in-out hover:bg-gray-800 hover:text-white dark:text-black dark:bg-white 
-                    dark:hover:bg-gray-300"
+                    transition-colors duration-300 ease-in-out hover:bg-[#b6b6b6c2] hover:text-black dark:text-black dark:bg-white 
+                    dark:hover:bg-[#e7e7e7c2]"
                 >
                     <FontAwesomeIcon icon={faPaperPlane} className="mr-2" />
                     Enviar

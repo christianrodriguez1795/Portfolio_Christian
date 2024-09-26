@@ -172,10 +172,10 @@ export default function Portfolio({ auth, proyectos }) {
                         <div className='flex justify-center items-center flex-grow'>
                             <button data-aos="fade-left"
                                 onClick={scrollToContact}
-                                className="md:w-fit h-fit flex flex-col flex-grow md:flex-grow-0 justify-center items-center gap-2 bg-[#00000065] dark:bg-[#ffffff63] text-white dark:text-black 
-                            font-bold px-6 py-2 rounded-lg transition-all duration-1000 ease-in-out hover:bg-black dark:hover:bg-white">
+                                className="md:w-fit h-fit flex flex-col flex-grow md:flex-grow-0 justify-center items-center gap-2 bg-black dark:bg-[#ffffff63] text-white dark:text-black 
+                                font-bold px-6 py-2 rounded-lg transition-all duration-1000 ease-in-out hover:bg-[#b6b6b6c2] hover:text-black dark:hover:bg-white">
                                 <span className='text-base'>¿Listo para dar vida a tus ideas?</span>
-                                <FontAwesomeIcon icon={faChevronDown} className="text-white dark:text-black animate-bounce-slow" />
+                                <FontAwesomeIcon icon={faChevronDown} className="animate-bounce-slow" />
                             </button>
                         </div>
                     </div>
@@ -276,16 +276,19 @@ export default function Portfolio({ auth, proyectos }) {
                             {/* <p data-aos="fade-up" data-aos-duration='1400' className='text-md font-semibold'>
                                 Este es el impulso que tu proyecto necesita para avanzar.
                             </p> */}
-                            <p data-aos="fade-up" data-aos-duration='1600' className='text-md font-semibold'>
-                                ¿Te gustaría que lo hiciéramos realidad juntos?
+                            <p data-aos="fade-up" data-aos-duration='1600' className='text-md md:text-2xl font-semibold'>
+                                Hagámoslo juntos
                             </p>
+                            {/* <p data-aos="fade-up" data-aos-duration='1600' className='text-md font-semibold'>
+                                Construyamos algo increíble juntos.
+                            </p> */}
                         </div>
                         <div data-aos="fade-left" className='w-full flex justify-center'>
                             <ContactForm setSnackbar={setSnackbar} />
                         </div>
                         <footer className="flex flex-col gap-2 bg-white text-black dark:bg-black dark:text-white md:pt-0 md:py-16 text-center text-sm md:flex-grow-0 h-fit justify-end">
                             <p data-aos="fade-down">© 2024 Christian Rodríguez Ponce de León. Todos los derechos reservados.</p>
-                            <div className="flex justify-center">
+                            <div className="flex justify-center gap-4">
                                 {socialLinks.map((item, index) => (
                                     <SocialLink key={index} href={item.href} icon={item.icon} animation={item.animation} />
                                 ))}

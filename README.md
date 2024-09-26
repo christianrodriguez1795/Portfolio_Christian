@@ -1,27 +1,12 @@
 <p align="center">
   <a href="https://christianrodriguezdev.es" target="_blank">
-    <img src="/storage/portfolio_logo.svg" width="400" alt="Portfolio Logo">
-  </a>
-</p>
-
-<p align="center">
-  <a href="https://github.com/christianrodriguezdev/portfolio/actions">
-    <img src="https://github.com/christianrodriguezdev/portfolio/workflows/tests/badge.svg" alt="Build Status">
-  </a>
-  <a href="https://packagist.org/packages/christianrodriguezdev/portfolio">
-    <img src="https://img.shields.io/packagist/dt/christianrodriguezdev/portfolio" alt="Total Downloads">
-  </a>
-  <a href="https://packagist.org/packages/christianrodriguezdev/portfolio">
-    <img src="https://img.shields.io/packagist/v/christianrodriguezdev/portfolio" alt="Latest Stable Version">
-  </a>
-  <a href="https://packagist.org/packages/christianrodriguezdev/portfolio">
-    <img src="https://img.shields.io/packagist/l/christianrodriguezdev/portfolio" alt="License">
+    <img src="https://christianrodriguezdev.es/storage/favicon/favicon_blanco.png" width="400" alt="Portfolio Logo">
   </a>
 </p>
 
 ## Sobre el Proyecto
 
-Este es el portafolio personal de **Christian Rodríguez**, desarrollador Full-Stack especializado en la creación de aplicaciones web escalables y modernas. El objetivo de este portafolio es mostrar mis habilidades, proyectos y ofrecer una forma simple para que las personas interesadas puedan contactarme.
+¡Hola! Soy **Christian Rodríguez**, desarrollador Full-Stack especializado en la creación de aplicaciones web escalables y modernas. El objetivo de este portafolio es mostrar mis habilidades, proyectos y ofrecer una forma simple para que las personas interesadas puedan contactarme.
 
 Puedes explorar mi trabajo en [christianrodriguezdev.es](https://christianrodriguezdev.es).
 
@@ -33,7 +18,7 @@ Este portafolio está desarrollado utilizando un stack moderno que incluye:
 - **Laravel** como backend.
 - **Tailwind CSS** para el diseño visual y la responsividad.
 - **AOS** (Animate on Scroll) para las animaciones suaves de desplazamiento.
-- **Axios** para la comunicación con la API.
+- **Inertia** para la comunicación con el backend.
 
 ## Funcionalidades Clave
 
@@ -44,7 +29,7 @@ Este portafolio está desarrollado utilizando un stack moderno que incluye:
 
 ## Capturas de Pantalla
 
-![Captura de Pantalla del Portafolio](https://christianrodriguezdev.es/storage/screenshot_portfolio.png)
+![Captura de Pantalla del Portafolio](https://christianrodriguezdev.es/storage/screenshots/screenshot_portada.jpg)
 
 ## Comando para Enlace Simbólico en Hostinger
 
