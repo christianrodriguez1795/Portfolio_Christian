@@ -13,6 +13,12 @@ class CurriculumController extends Controller
         return Inertia::render('Curriculum/Index');
     }
 
+    public function banner()
+    {
+        // $projects = Project::where('user_id', auth()->id())->get();
+        return Inertia::render('Curriculum/Banner');
+    }
+
     // public function create()
     // {
     //     return Inertia::render('Projects/Create');

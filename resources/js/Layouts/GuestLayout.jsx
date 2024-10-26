@@ -25,7 +25,7 @@ import MessageIcon from '@mui/icons-material/Message';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import SettingsIcon from '@mui/icons-material/Settings';
 import WorkOutlineIcon from '@mui/icons-material/WorkOutline';
-import SwitchTheme from '@/Components/SwitchTheme';
+import SwitchTheme from '@/Components/Inputs/SwitchTheme';
 import DescriptionIcon from '@mui/icons-material/Description';
 
 export default function Guest({ children }) {

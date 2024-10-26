@@ -76,6 +76,9 @@ document.addEventListener('pagination:click', () => {
 });
 
 document.addEventListener('scroll:activate', () => {
-    AOS.init({ duration: 1000 }); // Reactivar AOS
+    AOS.init({
+        duration: 1000,
+        once: true,
+    }); // Reactivar AOS
     AOS.refresh();
 });

@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { Head, Link } from '@inertiajs/react';
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, Snackbar, Alert } from '@mui/material';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, IconButton, Snackbar, Alert, Dialog, DialogTitle, DialogContent, TextField, DialogActions, Modal, Box, Typography } from '@mui/material';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleLeft, faAngleRight, faEdit, faTrash, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faAngleLeft, faAngleRight, faEdit, faTrash, faPlus, faEye, faXmark } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
+import { faGithub } from '@fortawesome/free-brands-svg-icons';
+import { Button } from '@headlessui/react';
 
 const Projects = ({ auth, projects }) => {
+
+  const [darkMode, setDarkMode] = useState(localStorage.getItem('theme') === 'dark');
   const [projectsList, setProjectsList] = useState(projects);
   const [itemsPerPage, setItemsPerPage] = useState(window.innerWidth < 768 ? 5 : 6); // Inicializar basado en el tamaño de pantalla
   const [currentPage, setCurrentPage] = useState(1);
@@ -14,6 +18,11 @@ const Projects = ({ auth, projects }) => {
   const [openSnackbar, setOpenSnackbar] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('');
   const [snackbarSeverity, setSnackbarSeverity] = useState('success');
+
+  // Modal states
+  const [openModal, setOpenModal] = useState(false);
+  const [projectToDelete, setProjectToDelete] = useState(null);
+  const [inputValue, setInputValue] = useState('');
 
   const updateItemsPerPage = () => {
     if (window.innerWidth < 768) {
@@ -32,6 +41,23 @@ const Projects = ({ auth, projects }) => {
     };
   }, []);
 
+
+  useEffect(() => {
+    const handleThemeChange = (event) => {
+      const currentTheme = event.detail.theme; // Extraer el tema desde event.detail
+      setDarkMode(currentTheme === 'dark');
+      console.log(`Tema actualizado en AnotherComponent: ${currentTheme}`);
+    };
+
+    // Escuchar el evento themeChange
+    window.addEventListener('themeChange', handleThemeChange);
+
+    // Limpiar el listener cuando se desmonte el componente
+    return () => {
+      window.removeEventListener('themeChange', handleThemeChange);
+    };
+  }, []);
+
   // Calcula la lista paginada de proyectos usando projectsList
   const paginatedProjects = projectsList.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
   const totalPages = Math.ceil(projectsList.length / itemsPerPage);
@@ -41,45 +67,71 @@ const Projects = ({ auth, projects }) => {
     setCurrentPage(page);
   };
 
-  const handleDelete = (id) => {
-    if (window.confirm('Are you sure you want to delete this project?')) {
-      axios.delete(route('projects.destroy', id))
+  // const handleDelete = (id) => {
+  //   if (window.confirm('Are you sure you want to delete this project?')) {
+  //     axios.delete(route('projects.destroy', id))
+  //       .then(response => {
+  //         const successMessage = response.data.success || 'Project deleted successfully.';
+  //         setSnackbarMessage(successMessage);
+  //         setSnackbarSeverity('success');
+  //         setOpenSnackbar(true);
+
+  //         setProjectsList(prevProjects => {
+  //           const updatedProjects = prevProjects.filter(project => project.id !== id);
+  //           const newTotalPages = Math.ceil(updatedProjects.length / itemsPerPage);
+
+  //           // Calcular la nueva página actual
+  //           let newPage = currentPage;
+
+  //           // Si la lista se vacía, redirigir a la primera página
+  //           if (updatedProjects.length === 0) {
+  //             newPage = 1;
+  //           } else if (paginatedProjects.length === 1 && currentPage > 1) {
+  //             // Si solo había un proyecto en la página actual y no es la primera página
+  //             newPage = currentPage - 1;
+  //           } else if (currentPage > newTotalPages) {
+  //             // Si la página actual es mayor que el total de páginas, ir a la última página
+  //             newPage = newTotalPages;
+  //           }
+
+  //           // Actualiza la página y la lista de proyectos
+  //           setCurrentPage(newPage);
+  //           return updatedProjects;
+  //         });
+  //       })
+  //       .catch(error => {
+  //         let errorMessage = 'Failed to delete project. Please try again.';
+  //         if (error.response) {
+  //           const { data } = error.response;
+  //           if (data.error) {
+  //             errorMessage = data.error;
+  //           }
+  //         }
+  //         setSnackbarMessage(errorMessage);
+  //         setSnackbarSeverity('error');
+  //         setOpenSnackbar(true);
+  //       });
+  //   }
+  // };
+
+
+
+  const handleDelete = () => {
+    if (projectToDelete && inputValue === projectToDelete.title) {
+      axios.delete(route('projects.destroy', projectToDelete.id))
         .then(response => {
           const successMessage = response.data.success || 'Project deleted successfully.';
           setSnackbarMessage(successMessage);
           setSnackbarSeverity('success');
           setOpenSnackbar(true);
 
-          setProjectsList(prevProjects => {
-            const updatedProjects = prevProjects.filter(project => project.id !== id);
-            const newTotalPages = Math.ceil(updatedProjects.length / itemsPerPage);
-
-            // Calcular la nueva página actual
-            let newPage = currentPage;
-
-            // Si la lista se vacía, redirigir a la primera página
-            if (updatedProjects.length === 0) {
-              newPage = 1;
-            } else if (paginatedProjects.length === 1 && currentPage > 1) {
-              // Si solo había un proyecto en la página actual y no es la primera página
-              newPage = currentPage - 1;
-            } else if (currentPage > newTotalPages) {
-              // Si la página actual es mayor que el total de páginas, ir a la última página
-              newPage = newTotalPages;
-            }
-
-            // Actualiza la página y la lista de proyectos
-            setCurrentPage(newPage);
-            return updatedProjects;
-          });
+          setProjectsList(prevProjects => prevProjects.filter(project => project.id !== projectToDelete.id));
+          setOpenModal(false);
         })
         .catch(error => {
           let errorMessage = 'Failed to delete project. Please try again.';
-          if (error.response) {
-            const { data } = error.response;
-            if (data.error) {
-              errorMessage = data.error;
-            }
+          if (error.response?.data?.error) {
+            errorMessage = error.response.data.error;
           }
           setSnackbarMessage(errorMessage);
           setSnackbarSeverity('error');
@@ -88,52 +140,111 @@ const Projects = ({ auth, projects }) => {
     }
   };
 
+  const handleOpenModal = (project) => {
+    setProjectToDelete(project);
+    setInputValue('');
+    setOpenModal(true);
+  };
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+    setProjectToDelete(null);
+    setInputValue('');
+  };
+
   const handleCloseSnackbar = () => {
     setOpenSnackbar(false);
   };
 
+  const modalStyle = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: '90%',
+    maxWidth: 500,
+    bgcolor: darkMode ? '#2c2c2c' : 'white',
+    borderRadius: 2,
+    boxShadow: 24,
+    p: 4,
+  };
+
+
   return (
-    <AuthenticatedLayout user={auth.user} header={<h2 className="text-black dark:text-white font-semibold text-xl leading-tight">Proyectos</h2>}>
+    <AuthenticatedLayout user={auth.user} header={<h2 className="text-[#757575] dark:text-white font-semibold text-xl leading-tight">Proyectos</h2>}>
       <Head title="Projects" />
 
-      <div className='max-w-6xl mx-auto'>
-        <div>
+      <div className='max-w-6xl mx-auto p-6'>
+        <div className='flex flex-col gap-4 p-5'>
           <div className='w-full flex justify-end'>
             <Link
-              href={route('projects.create')} // Usa la función route() para obtener la URL correcta
-              className="px-4 py-[6px] bg-black text-white dark:bg-white dark:text-black hover:bg-[#A9A9A9] 
-              dark:hover:bg-gray-300 flex items-center mt-4 rounded-[4px] uppercase text-[14px] no-underline"
+              href={route('projects.create')}
+              className=" flex  flex-grow md:flex-grow-0 justify-center items-center gap-2 bg-[#757575] dark:bg-[#ffffff63] text-white dark:text-black 
+                          font-bold px-4 py-4 md:py-[6px] rounded-lg transition-all duration-500 ease-in-out hover:bg-[#b6b6b6c2] hover:text-black dark:hover:bg-white "
             >
-              <FontAwesomeIcon icon={faPlus} className="mr-2" />
+              <FontAwesomeIcon icon={faPlus} className="" />
               Nuevo
             </Link>
           </div>
-          <TableContainer component={Paper} sx={{ mt: 2 }} className='shadow-lg dark:bg-[#272727]'>
-            <Table aria-label="simple table">
-              <TableHead>
-                <TableRow>
-                  <TableCell align="left" className='dark:text-white' style={{ fontWeight: 'bold' }}>Imagen</TableCell>
-                  <TableCell align="left" className='dark:text-white' style={{ fontWeight: 'bold' }}>Titulo</TableCell>
-                  <TableCell align="left" className='dark:text-white' sx={{ fontWeight: 'bold', display: { xs: 'none', md: 'table-cell', } }}>Descripcion</TableCell>
-                  <TableCell align="left" className='dark:text-white' sx={{ fontWeight: 'bold', display: { xs: 'none', md: 'table-cell', } }}>URL</TableCell>
-                  <TableCell align="left" className='dark:text-white' style={{ fontWeight: 'bold' }}>Acciones</TableCell>
+
+          <TableContainer className={`border border-[#757575] dark:border-white rounded-lg shadow-lg scrollbarGenerico ${darkMode ? 'scrollbarGenerico-dark' : 'scrollbarGenerico-light'}  `}>
+            <Table aria-label="simple table" sx={{ border: 'none' }} className=' bg-white dark:bg-[#272727]'>
+              <TableHead sx={{ border: 'none' }}>
+                <TableRow className='border-b border-[#757575] dark:border-white'>
+                  <TableCell align="left" className='dark:text-white' sx={{ border: 'none', fontWeight: 'bold', display: { xs: 'table-cell' }, '@media (max-width: 600px)': { display: 'none' } }}>Imagen</TableCell>
+                  <TableCell align="left" className='dark:text-white' sx={{ border: 'none', fontWeight: 'bold' }}>Titulo</TableCell>
+                  <TableCell align="left" className='dark:text-white' sx={{ border: 'none', fontWeight: 'bold', display: { xs: 'none', md: 'table-cell', } }}>Descripcion</TableCell>
+                  <TableCell align="left" className='dark:text-white' sx={{ border: 'none', fontWeight: 'bold', display: { xs: 'none', md: 'table-cell', } }}>URL</TableCell>
+                  <TableCell align="left" className='dark:text-white' sx={{ border: 'none', fontWeight: 'bold' }}>Acciones</TableCell>
                 </TableRow>
               </TableHead>
-              <TableBody>
+              <TableBody sx={{ border: 'none' }} className='border-[#757575] dark:border-white'>
                 {paginatedProjects.length > 0 ? (
-                  paginatedProjects.map((project) => (
-                    <TableRow key={project.id}>
-                      <TableCell align="left">{project.image && <img src={`${project.image}`} alt={project.title} style={{ width: 50, height: 50 }} className='rounded-md' />}</TableCell>
-                      <TableCell align="left" className='dark:text-white'>{project.title}</TableCell>
-                      <TableCell align="left" className='dark:text-white' sx={{ display: { xs: 'none', md: 'table-cell', } }}>{project.description}</TableCell>
-                      <TableCell align="left" className='dark:text-white' sx={{ display: { xs: 'none', md: 'table-cell', } }}>{project.url && <a href={project.url} target="_blank">Visit</a>}</TableCell>
-                      <TableCell align="left">
-                        <IconButton component={Link} href={route('projects.edit', project.id)} color="primary" sx={{ mr: 2 }}>
-                          <FontAwesomeIcon icon={faEdit} />
-                        </IconButton>
-                        <IconButton color="error" onClick={() => handleDelete(project.id)}>
-                          <FontAwesomeIcon icon={faTrash} />
-                        </IconButton>
+                  paginatedProjects.map((project, index) => (
+                    <TableRow key={project.id} className={`${index === paginatedProjects.length - 1 ? 'border-none' : 'border-b border-r border-[#757575] dark:border-white'}`}>
+                      <TableCell align="left" sx={{ border: 'none', display: { xs: 'table-cell' }, '@media (max-width: 600px)': { display: 'none' } }}>{project.image && <img src={`${project.image}`} alt={project.title} style={{ width: 50, height: 50 }} className='rounded-md' />}</TableCell>
+                      <TableCell align="left" className='dark:text-white' sx={{ border: 'none' }} >{project.title}</TableCell>
+                      <TableCell align="left" className='dark:text-white' sx={{ border: 'none', display: { xs: 'none', md: 'table-cell', } }}>{project.description}</TableCell>
+                      <TableCell align="left" className='dark:text-white' sx={{ border: 'none', display: { xs: 'none', md: 'table-cell', } }}>
+                        {project.urlGitHub && <a href={project.urlGitHub} target="_blank" className='flex justify-center text-[#757575] hover:text-[#b6b6b6c2] 
+                        dark:hover:text-white transition-all duration-300'>
+                          <FontAwesomeIcon icon={faGithub} size='2x' />
+                        </a>
+                        }
+                        {project.urlSitio && <a href={project.urlSitio} target="_blank" className='flex justify-center text-[#757575] hover:text-[#b6b6b6c2] 
+                        dark:hover:text-white transition-all duration-300'>
+                          <FontAwesomeIcon icon={faEye} size='2x' />
+                        </a>
+                        }
+                      </TableCell>
+                      <TableCell align="left" sx={{ border: 'none' }}>
+                        <div className='flex gap-1 md:gap-2'>
+                          <IconButton component={Link} href={route('projects.edit', project.id)}
+                            sx={{
+                              color: '#757575',
+                              transition: 'color 0.3s ease',
+                              '&:hover': {
+                                color: darkMode ? 'white' : '#b6b6b6c2',
+                              },
+                            }}
+                          >
+                            <FontAwesomeIcon icon={faEdit} />
+                          </IconButton>
+                          <IconButton
+                            // onClick={() => handleDelete(project.id)} 
+                            onClick={() => handleOpenModal(project)}
+                            className='bg-white'
+                            sx={{
+                              color: '#757575',
+                              transition: 'color 0.3s ease',
+                              '&:hover': {
+                                color: 'red', // Color en hover
+                              },
+                            }}
+                          >
+                            <FontAwesomeIcon icon={faTrash} />
+                          </IconButton>
+                        </div>
                       </TableCell>
                     </TableRow>
                   ))
@@ -183,6 +294,78 @@ const Projects = ({ auth, projects }) => {
           )}
         </div>
       </div>
+
+      {/*----------------------------------------------------------------------------------------------------------------------------------------*/}
+      {/*----------------------------------------------------------------------------------------------------------------------------------------*/}
+      {/*---------------------------------------------------------Modal de confirmación----------------------------------------------------------*/}
+      {/*----------------------------------------------------------------------------------------------------------------------------------------*/}
+      {/*----------------------------------------------------------------------------------------------------------------------------------------*/}
+
+      <Modal open={openModal} onClose={handleCloseModal}>
+        <Box sx={modalStyle} className='flex flex-col gap-5'>
+          <Typography variant="h6" textAlign='center' color={darkMode ? 'white' : 'black'}>
+            Confirmar Eliminación
+          </Typography>
+          <div
+            className={`flex flex-col gap-5 overflow-y-auto scrollbarModal ${darkMode ? 'scrollbarModal-dark' : 'scrollbarModal-light'}`}
+            style={{ minHeight: 'auto', maxHeight: 'auto', overflowY: 'auto' }}
+          >
+            <div className='flex flex-col gap-3'>
+
+
+              <Typography variant="body2" color={darkMode ? 'white' : 'black'}>
+                ¿Estas seguro de que desea eliminar este proyecto?.
+              </Typography>
+              <Typography variant="body2" color={darkMode ? 'white' : 'black'}>
+                Escribe el nombre del proyecto <strong className='text-red-600'>{projectToDelete?.title}</strong> para confirmar la eliminación.
+              </Typography>
+            </div>
+
+            <div className="flex-grow relative">
+              <input
+                type="text"
+                id="deleteProject"
+                name="deleteProject"
+                value={inputValue}
+                onChange={(e) => setInputValue(e.target.value)}
+                required
+                className="peer px-[14px] py-[16.5px] w-full border border-[#757575] bg-transparent rounded-lg focus:outline-none 
+                focus:ring-0 focus:border-[#2c2c2c] dark:focus:border-[#A9A9A9] dark:border-white dark:bg-transparent dark:text-white
+                placeholder-white"
+                placeholder="Nombre del proyecto"
+              />
+            </div>
+          </div>
+          <div className='flex justify-between items-center gap-4'>
+
+            <button
+              onClick={handleCloseModal}
+              className="flex md:flex-grow-0 justify-center items-center gap-2 bg-[#757575] dark:bg-[#ffffff63] text-white 
+              dark:text-black font-bold px-4 py-[6px] rounded-lg transition-all duration-500 ease-in-out hover:bg-[#b6b6b6c2] 
+              hover:text-black dark:hover:bg-white"
+            >
+              Cancelar
+            </button>
+
+            <button
+              disabled={inputValue !== projectToDelete?.title}
+              onClick={handleDelete}
+              className={`${inputValue !== projectToDelete?.title ? 'text-black bg-[#757575] dark:bg-[#ffffff63] cursor-no-drop' : ' bg-red-600 text-white hover:bg-red-800'} 
+              hidden md:flex md:flex-grow-0 justify-center items-center gap-2 font-bold px-4 py-[6px] rounded-lg transition-all duration-500 ease-in-out `}
+            >
+              <FontAwesomeIcon icon={faTrash} />
+              Eliminar
+            </button>
+          </div>
+        </Box>
+      </Modal>
+
+      {/*----------------------------------------------------------------------------------------------------------------------------------------*/}
+      {/*----------------------------------------------------------------------------------------------------------------------------------------*/}
+      {/*-----------------------------------------------------------------Snackbar---------------------------------------------------------------*/}
+      {/*----------------------------------------------------------------------------------------------------------------------------------------*/}
+      {/*----------------------------------------------------------------------------------------------------------------------------------------*/}
+
       <Snackbar
         open={openSnackbar}
         autoHideDuration={6000}
@@ -193,6 +376,7 @@ const Projects = ({ auth, projects }) => {
           {snackbarMessage}
         </Alert>
       </Snackbar>
+
     </AuthenticatedLayout>
   );
 };

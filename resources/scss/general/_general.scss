@@ -1,18 +1,38 @@
-input:-webkit-autofill,
-input:-webkit-autofill:hover,
-input:-webkit-autofill:focus,
-input:-webkit-autofill:active {
+.inputCustom:-webkit-autofill,
+.inputCustom:-webkit-autofill:hover,
+.inputCustom:-webkit-autofill:focus,
+.inputCustom:-webkit-autofill:active {
     -webkit-box-shadow: 0 0 0 1000px white inset !important;
     box-shadow: 0 0 0 1000px white inset !important;
-    -webkit-text-fill-color: inherit !important;    
+    -webkit-text-fill-color: inherit !important;
 }
 
 /* Estilos para modo oscuro */
-.dark input:-webkit-autofill,
-.dark input:-webkit-autofill:hover,
-.dark input:-webkit-autofill:focus,
-.dark input:-webkit-autofill:active {
-    -webkit-text-fill-color:white !important;
+.dark .inputCustom:-webkit-autofill,
+.dark .inputCustom:-webkit-autofill:hover,
+.dark .inputCustom:-webkit-autofill:focus,
+.dark .inputCustom:-webkit-autofill:active {
+    -webkit-text-fill-color: white !important;
+    -webkit-box-shadow: 0 0 0 1000px #000000 inset !important;
+    box-shadow: 0 0 0 1000px #000000 inset !important;
+}
+
+.inputLogin:-webkit-autofill,
+.inputLogin:-webkit-autofill:hover,
+.inputLogin:-webkit-autofill:focus,
+.inputLogin:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0 1000px white inset !important;
+    box-shadow: 0 0 0 1000px white inset !important;
+    -webkit-text-fill-color: inherit !important;
+
+}
+
+/* Estilos para modo oscuro */
+.dark .inputLogin:-webkit-autofill,
+.dark .inputLogin:-webkit-autofill:hover,
+.dark .inputLogin:-webkit-autofill:focus,
+.dark .inputLogin:-webkit-autofill:active {
+    -webkit-text-fill-color: white !important;
     -webkit-box-shadow: 0 0 0 1000px #2c2c2c inset !important;
     box-shadow: 0 0 0 1000px #2c2c2c inset !important;
 }
@@ -36,6 +56,17 @@ input:-webkit-autofill:active {
     filter: invert(100%) hue-rotate(280deg);
     /* Invertir colores por defecto */
     opacity: 0.3;
+}
+
+.video-background-banner {
+    position: absolute;
+    object-fit: cover;
+    filter: invert(100%) hue-rotate(280deg);
+    opacity: 0.3;
+}
+
+.dark .video-background-banner {
+    filter: none;
 }
 
 .dark .video-background {

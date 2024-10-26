@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Head, usePage } from '@inertiajs/react';
-import { Typography, Card, CardContent, Grid, Button } from '@mui/material';
+import { Typography, Card, CardContent, Grid, Button, CircularProgress } from '@mui/material';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid, ResponsiveContainer } from 'recharts';
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
 import ExcelJS from 'exceljs';
@@ -10,36 +10,23 @@ import { faFileExport } from '@fortawesome/free-solid-svg-icons';
 
 const Dashboard = () => {
   const { visits } = usePage().props;
-
-  // Función para obtener el tema preferido
-  const getPreferredTheme = () => {
-    const localTheme = localStorage.getItem('theme');
-    if (localTheme) {
-      return localTheme === 'dark';
-    } else {
-      return window.matchMedia('(prefers-color-scheme: dark)').matches;
-    }
-  };
-
-  const [darkMode, setDarkMode] = useState(getPreferredTheme);
-  const [chartKey, setChartKey] = useState(Date.now()); // Estado para forzar la actualización
+  const [darkMode, setDarkMode] = useState(localStorage.getItem('theme') === 'dark');
 
   useEffect(() => {
-    const matchDark = window.matchMedia('(prefers-color-scheme: dark)');
-    const handleChange = (e) => {
-      if (!localStorage.getItem('theme')) {
-        setDarkMode(e.matches);
-        setChartKey(prevKey => prevKey + 1); // Incrementar clave para forzar renderizado
-      }
+    const handleThemeChange = (event) => {
+      const currentTheme = event.detail.theme; // Extraer el tema desde event.detail
+      setDarkMode(currentTheme === 'dark');
+      console.log(`Tema actualizado en AnotherComponent: ${currentTheme}`);
     };
-    matchDark.addEventListener('change', handleChange);
 
-    return () => matchDark.removeEventListener('change', handleChange);
+    // Escuchar el evento themeChange
+    window.addEventListener('themeChange', handleThemeChange);
+
+    // Limpiar el listener cuando se desmonte el componente
+    return () => {
+      window.removeEventListener('themeChange', handleThemeChange);
+    };
   }, []);
-
-  useEffect(() => {
-    document.documentElement.classList.toggle('dark', darkMode);
-  }, [darkMode]);
 
   const pageTranslations = {
     '/': 'Portafolio',
@@ -87,7 +74,7 @@ const Dashboard = () => {
     <AuthenticatedLayout header={<h2 className="text-[#757575] dark:text-white font-semibold text-xl leading-tight">Panel de control</h2>}>
       <Head title="Panel de control" />
 
-      <div className='w-full grid grid-cols-1 xl:grid-cols-[2fr_1fr] gap-6'>
+      <div className='w-full grid grid-cols-1 xl:grid-cols-[2fr_1fr] gap-6 p-6'>
         <Grid className='flex-1'>
           <Card className='dark:bg-[#272727]'>
             <CardContent>
@@ -95,15 +82,30 @@ const Dashboard = () => {
                 Visitas
               </Typography>
               <div style={{ height: 400, width: '100%' }}>
-                <ResponsiveContainer key={chartKey}>
-                  <BarChart data={data}>
-                    {/* Eliminar la malla discontinua */}
-                    <CartesianGrid stroke="none" />
-                    <XAxis dataKey="name" tick={{ fill: darkMode ? 'white' : 'black' }} stroke={darkMode ? 'white' : 'black'} />
-                    <YAxis tick={{ fill: darkMode ? 'white' : 'black' }} stroke={darkMode ? 'white' : 'black'} />
-                    <Tooltip content={<CustomTooltip />} />
-                    <Bar dataKey="visitas" fill={darkMode ? 'white' : 'black'} activeBar={{ fill: darkMode ? '#7eb2ff' : '#7eb2ff' }} />
-                  </BarChart>
+                <ResponsiveContainer>
+                  {data.length > 0 ? (
+
+                    <BarChart data={data}>
+                      {/* Eliminar la malla discontinua */}
+                      <CartesianGrid stroke="none" />
+                      <XAxis dataKey="name" tick={{ fill: darkMode ? 'white' : 'black' }} stroke={darkMode ? 'white' : 'black'} />
+                      <YAxis tick={{ fill: darkMode ? 'white' : 'black' }} stroke={darkMode ? 'white' : 'black'} />
+                      <Tooltip content={<CustomTooltip />} />
+                      <Bar dataKey="visitas" fill={darkMode ? 'white' : 'black'} activeBar={{ fill: darkMode ? '#7eb2ff' : '#7eb2ff' }} />
+                    </BarChart>
+                  ) : (
+                    <div className='w-full h-full flex justify-center items-center'>
+                      <div className='flex flex-col justify-center items-center gap-4'>
+
+                        <span className='dark:text-white'>Esperando resultados </span>
+                        <CircularProgress variant='indeterminate'
+                          sx={{
+                            color: darkMode ? 'white' : 'black',
+                          }}
+                        />
+                      </div>
+                    </div>
+                  )}
                 </ResponsiveContainer>
               </div>
             </CardContent>
@@ -111,7 +113,7 @@ const Dashboard = () => {
         </Grid>
 
         <Grid className='flex-2'>
-          <Card className='dark:bg-[#272727]'>
+          <Card className='dark:bg-[#272727]' sx={{ padding: '16px', '& .MuiCardContent-root': { padding: 0 } }}>
             <CardContent>
               <div className='w-full lg:inline-flex justify-between gap-6'>
                 <div>

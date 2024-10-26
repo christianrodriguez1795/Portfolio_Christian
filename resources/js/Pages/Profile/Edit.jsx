@@ -15,7 +15,7 @@ export default function Edit({ auth, mustVerifyEmail, status }) {
             <div className="">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
                     <div className='w-full flex flex-col md:flex-row gap-6'>
-                        <div className="p-4 sm:p-8 bg-white bg-opacity-0 border border-gray-300 dark:border-opacity-0 shadow-md  sm:rounded-lg flex flex-col flex-grow">
+                        <div className="p-4 sm:p-8 bg-white bg-opacity-0 dark:bg-[#2c2c2c] dark:bg-opacity-0 border border-gray-300 dark:border-opacity-0 shadow-md  sm:rounded-lg flex flex-col flex-grow">
                             <UpdateProfileInformationForm
                                 mustVerifyEmail={mustVerifyEmail}
                                 status={status}

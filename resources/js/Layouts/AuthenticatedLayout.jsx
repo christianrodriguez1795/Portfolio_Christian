@@ -24,13 +24,14 @@ import MessageIcon from '@mui/icons-material/Message';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import SettingsIcon from '@mui/icons-material/Settings';
 import WorkOutlineIcon from '@mui/icons-material/WorkOutline';
-import SwitchTheme from '@/Components/SwitchTheme';
+import SwitchTheme from '@/Components/Inputs/SwitchTheme';
 import DescriptionIcon from '@mui/icons-material/Description';
+import PanoramaIcon from '@mui/icons-material/Panorama';
 
 const drawerWidth = 240;
-const miniDrawerWidth = 60;
+const miniDrawerWidth = 48;
 
-export default function AuthenticatedLayout({ header, children }) {
+export default function AuthenticatedLayout({ header, children, classname }) {
     const { auth } = usePage().props;
     const [mobileOpen, setMobileOpen] = useState(false);
     const [anchorElUser, setAnchorElUser] = useState(null);
@@ -88,6 +89,7 @@ export default function AuthenticatedLayout({ header, children }) {
 
         // Cambiar el estado y guardar en localStorage
         setDarkMode(newValue);
+        const theme = newValue ? 'dark' : 'light';
         localStorage.setItem('theme', newValue ? 'dark' : 'light');
         document.documentElement.classList.toggle('dark', newValue);
 
@@ -97,6 +99,10 @@ export default function AuthenticatedLayout({ header, children }) {
                 element.style.transition = ''; // Reactiva transiciones
             });
         }, 300); // Ajusta el tiempo según la duración de tus transiciones
+
+        // Dispara un evento personalizado
+        // window.dispatchEvent(new Event('themeChange'));
+        window.dispatchEvent(new CustomEvent('themeChange', { detail: { theme } }));
     };
 
     const handleLogout = () => {
@@ -105,29 +111,33 @@ export default function AuthenticatedLayout({ header, children }) {
 
     const drawer = (
         <div onMouseEnter={() => setDrawerOpen(true)} onMouseLeave={() => setDrawerOpen(false)} >
-            <ul className="py-2">
+            <ul className="flex flex-col justify-center gap-2 py-2">
                 {[
                     { text: 'Panel de Control', icon: <DashboardIcon />, link: '/admin' },
-                    { text: 'Mensajes', icon: <MessageIcon />, link: '/messages' },
+                    { text: 'Portfolio', icon: <WorkOutlineIcon />, link: '/' },
                     { text: 'Proyectos', icon: <AssignmentIcon />, link: '/projects' },
                     { text: 'Curriculum', icon: <DescriptionIcon />, link: '/curriculum' },
-                    { text: 'Portfolio', icon: <WorkOutlineIcon />, link: '/' },
+                    { text: 'Banner', icon: <PanoramaIcon />, link: '/curriculum/banner' },
+                    { text: 'Mensajes', icon: <MessageIcon />, link: '/messages' },
                     { text: 'Blog', icon: <MailIcon />, link: '/blog' },
+
                 ].map((item, index) => (
-                    <ListItem button key={item.text} component={Link} href={item.link} className='text-black bg-white  hover:bg-neutral-700 dark:hover:bg-neutral-700 dark:text-white dark:hover:text-black '>
-                        <ListItemIcon className='dark:text-white'>{item.icon}</ListItemIcon>
-                        <ListItemText
-                            primary={item.text}
-                            sx={{
-                                whiteSpace: 'nowrap',
-                                overflow: 'hidden',
-                                textOverflow: 'ellipsis',
-                                transition: 'opacity 0.3s ease',
-                                opacity: drawerOpen || mobileOpen ? 1 : 0,
-                            }}
-                            className='dark:text-white'
-                        />
-                    </ListItem>
+                    <div key={item.text} className={`w-full`}>
+                        <Link
+                            href={item.link}
+                            className={`flex  text-[#757575] hover:text-white hover:bg-[#757575] dark:hover:bg-neutral-700 dark:text-white 
+                                dark:hover:text-gray-300 w-full px-3 py-2 transition-colors duration-300`}
+                        >
+                            <span className="dark:text-white flex justify-center">
+                                {item.icon}
+                            </span>
+                            <span
+                                className={`whitespace-nowrap overflow-hidden text-ellipsis transition-opacity duration-300 ${drawerOpen || mobileOpen ? 'w-full ml-3' : 'w-0'}`}
+                            >
+                                {item.text}
+                            </span>
+                        </Link >
+                    </div>
                 ))}
             </ul>
 
@@ -135,7 +145,7 @@ export default function AuthenticatedLayout({ header, children }) {
     );
 
     return (
-        <Box sx={{ display: 'flex', minHeight: '100vh', flexDirection: 'column' }} className={darkMode ? 'dark' : ''}>
+        <Box sx={{ display: 'flex', minHeight: '100vh', flexDirection: 'column' }} className={`${darkMode ? 'dark' : ''} ${classname}`}>
             <CssBaseline />
             <AppBar
                 position="fixed"
@@ -280,18 +290,18 @@ export default function AuthenticatedLayout({ header, children }) {
                     component="main"
                     sx={{
                         flexGrow: 1,
-                        p: 3,
+                        // p: 3,
                         overflow: 'auto',
                         maxHeight: 'calc(100vh - 64px)',
                         position: 'relative',
                     }}
-                    className={`video-container bg-white dark:bg-black scrollbarGenerico ${darkMode ? 'scrollbarGenerico-dark' : 'scrollbarGenerico-light'}`}
+                    className={`video-container bg-white dark:bg-black scrollbarGenerico ${darkMode ? 'scrollbarGenerico-dark' : 'scrollbarGenerico-light'} overflow-hidden`}
                 >
                     <video autoPlay loop muted className='video-background' preload="auto">
                         <source src="/storage/loopLetras.mp4" type="video/mp4" />
                         Your browser does not support the video tag.
                     </video>
-                    <Box sx={{ position: 'relative', zIndex: 4 }}>
+                    <Box sx={{ position: 'relative', zIndex: 4 }} className={`w-full h-full overflow-x-hidden scrollbarGenerico ${darkMode ? 'scrollbarGenerico-dark' : 'scrollbarGenerico-light'}`} >
                         {children}
                     </Box>
                 </Box>

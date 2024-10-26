@@ -77,7 +77,7 @@ const ContactForm = ({ setSnackbar }) => {
                             name="name"
                             value={form.name}
                             onChange={handleChange}
-                            className={`peer pl-0 p-3 pt-5 w-full border-b-2 border-t-0 border-l-0 border-r-0 ${errors.name ? 'border-red-500 dark:border-red-500' : 'border-black'} 
+                            className={`inputCustom peer pl-0 p-3 pt-5 w-full border-b-2 border-t-0 border-l-0 border-r-0 ${errors.name ? 'border-red-500 dark:border-red-500' : 'border-black'} 
                         focus:outline-none focus:ring-0 focus:border-gray-300 dark:border-white dark:bg-black dark:text-white 
                         placeholder-transparent`}
                             placeholder=" "
@@ -104,7 +104,7 @@ const ContactForm = ({ setSnackbar }) => {
                             name="email"
                             value={form.email}
                             onChange={handleChange}
-                            className={`peer pl-0 p-3 pt-5 w-full border-b-2 border-t-0 border-l-0 border-r-0 ${errors.email ? 'border-red-500 dark:border-red-500' : 'border-black'} 
+                            className={`inputCustom peer pl-0 p-3 pt-5 w-full border-b-2 border-t-0 border-l-0 border-r-0 ${errors.email ? 'border-red-500 dark:border-red-500' : 'border-black'} 
                         focus:outline-none focus:ring-0 focus:border-gray-300 dark:border-white dark:bg-black dark:text-white 
                         placeholder-transparent`}
                             placeholder=" "
@@ -132,7 +132,7 @@ const ContactForm = ({ setSnackbar }) => {
                         name="subject"
                         value={form.subject}
                         onChange={handleChange}
-                        className={`peer pl-0 p-3 pt-5 w-full border-b-2 border-t-0 border-l-0 border-r-0 ${errors.subject ? 'border-red-500 dark:border-red-500' : 'border-black'} 
+                        className={`inputCustom peer pl-0 p-3 pt-5 w-full border-b-2 border-t-0 border-l-0 border-r-0 ${errors.subject ? 'border-red-500 dark:border-red-500' : 'border-black'} 
                         focus:outline-none focus:ring-0 focus:border-gray-300 dark:border-white dark:bg-black dark:text-white 
                         placeholder-transparent`}
                         placeholder=" "
@@ -159,7 +159,7 @@ const ContactForm = ({ setSnackbar }) => {
                         rows="4"
                         value={form.message}
                         onChange={handleChange}
-                        className={`peer pl-2 p-3 pt-4 w-full border-2 rounded-md ${errors.message ? 'border-red-500 dark:border-red-500' : 'border-black'} 
+                        className={`inputCustom peer pl-2 p-3 pt-4 w-full border-2 rounded-md ${errors.message ? 'border-red-500 dark:border-red-500' : 'border-black'} 
                         focus:outline-none focus:ring-0 focus:border-gray-300 dark:border-white dark:bg-black dark:text-white 
                         placeholder-transparent resize-none scrollbarGenerico scrollbarGenerico-light`}
                         placeholder=" "

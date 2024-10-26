@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import SectionContainer from '@/Components/SectionContainer';
-import SwitchTheme from '@/Components/SwitchTheme';
+import SwitchTheme from '@/Components/Inputs/SwitchTheme';
 import { Link, Head } from '@inertiajs/react';
 import Proyectos from '@/Components/Projects';
 import ContactForm from '@/Components/Formularios/ContactForm';
@@ -9,7 +9,7 @@ import useTypewriter from '@/Hooks/useTypewriter';
 import SkillCategory from '@/Components/Portfolio/SkillCategory';
 import SoftSkills from '@/Components/Portfolio/SoftSkills';
 import SocialLink from '@/Components/Portfolio/SocialLink';
-import { educacion, experienciaLaboral, socialLinks } from '@/Hooks/datosPorfolio';
+import { educacionPortfolio, experienciaLaboralPortfolio, hardSkillsPortfolio, socialLinksPortfolio } from '@/Hooks/datosPorfolio';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronDown } from '@fortawesome/free-solid-svg-icons';
 
@@ -111,9 +111,22 @@ export default function Portfolio({ auth, proyectos }) {
         }
     }, []);
 
+    const [expandedItems, setExpandedItems] = useState({});
+
+
+    // Función para alternar el estado de expansión
+    const toggleExpand = (index) => {
+        setExpandedItems((prevState) => ({
+            ...prevState,
+            [index]: !prevState[index], // Alterna el estado solo para el índice específico
+        }));
+    };
+    // console.log(contentRef.current.);
+
+
     return (
         <>
-            <Head title="Portfolio" />
+            <Head title="Portfolio" children />
             <header className="bg-transparent flex justify-end items-center gap-2 px-4 py-4 fixed z-30 w-full">
                 <nav className="flex justify-end items-center">
                     {auth.user && (
@@ -132,28 +145,31 @@ export default function Portfolio({ auth, proyectos }) {
                     />
                 </nav>
             </header>
-            <main className="bg-white text-black dark:bg-black dark:text-white scrollbarNav scrollbarGenerico-light">
+            <main className="bg-white text-black dark:bg-black dark:text-white scrollbarNav scrollbarGenerico-light overflow-hidden">
 
-                <SectionContainer ref={el => sectionsRef.current[0] = el} className="video-container section lg:h-screen flex justify-center items-center">
-                    <video ref={videoRef} autoPlay loop muted className="video-background" preload="auto">
+                <SectionContainer ref={el => sectionsRef.current[0] = el} className="video-container section lg:h-screen flex justify-center items-center gap-5 md:gap-[52px] pb-12 md:pt-12 px-5 md:px-10">
+                    <video ref={videoRef} autoPlay loop muted className="video-background" preload="auto" >
                         <source src="/storage/loopLetrasWeb.mp4" type="video/mp4" />
                         Your browser does not support the video tag.
                     </video>
-                    <div className="relative text-black dark:text-white flex flex-col gap-12 justify-center items-center flex-grow z-[2] h-full">
-                        <div className='flex flex-col gap-4'>
+                    <div className="relative text-black dark:text-white flex flex-col gap-12 justify-end items-center flex-grow z-[2] h-full">
+                        <div className='flex flex-col gap-4 flex-grow justify-center'>
                             <h1 data-aos="fade-down" className='px-2 md:p-0 text-4xl md:text-7xl font-bold text-center'>Christian Rodríguez Ponce de León</h1>
                             <p data-aos="fade-left" className='hidden md:block px-2 md:p-0 text-xl md:text-4xl text-center'>Desarrollador Fullstack | {typedText}</p>
                             <p data-aos="fade-left" className='md:hidden px-2 md:p-0 text-xl md:text-4xl text-center'>Desarrollador Fullstack</p>
                             <p data-aos="fade-left" className='md:hidden px-2 md:p-0 text-xl md:text-4xl text-center'>| {typedText}</p>
                             <p data-aos="fade-up" className='px-2 md:px-0 text-xl md:text-4xl italic font-thin text-center pt-8'>“Primero resuelve el problema, después escribe el código”</p>
                         </div>
+                        <div data-aos="fade-up" data-aos-duration='3000' className='flex justify-center items-center'>
+                            <FontAwesomeIcon icon={faChevronDown} className="animate-bounce-slow" />
+                        </div>
                     </div>
                 </SectionContainer>
 
-                <SectionContainer id="about" ref={el => sectionsRef.current[1] = el} title={'SOBRE MÍ'} className="section lg:h-screen flex justify-center">
+                <SectionContainer id="about" ref={el => sectionsRef.current[1] = el} title={'SOBRE MÍ'} className="section lg:h-screen flex justify-center gap-5 md:gap-[52px] pb-12 md:pt-12 px-5 md:px-10">
                     <div className='flex flex-col gap-6 flex-grow'>
                         <div className='grid grid-cols-1 lg:grid-cols-2 gap-3 md:gap-6'>
-                            <img data-aos="fade-right" className='w-full lg:h-full object-cover rounded-md' src="/storage/Foto_Generica_Sobre_Mi.jpg" alt="Christian Rodríguez" />
+                            <img data-aos="fade-right" className='w-full lg:h-full object-cover rounded-md' src="/storage/Foto_Generica_Sobre_Mi.jpg" alt="Christian Rodríguez" loading='lazy' />
                             <div data-aos="fade-left" className='flex flex-col gap-4 sm:text-sm md:text-[19px] w-full text-justify flex-grow lg:px-6 hyphens-auto'>
                                 <p data-aos="fade-up" data-aos-duration='1200' data-aos-offset="200" className=''>
                                     ¡Hola! Soy <strong>Christian Rodríguez</strong>, desarrollador Full-Stack con experiencia en la creación de aplicaciones web escalables y modernas. Con una sólida formación en <strong>HTML5, CSS3, JavaScript, PHP</strong> y frameworks como <strong>React y Laravel</strong>, me especializo en crear soluciones eficientes que combinan <strong>estética y funcionalidad</strong>.
@@ -182,7 +198,7 @@ export default function Portfolio({ auth, proyectos }) {
                 </SectionContainer>
 
 
-                <SectionContainer id="education" ref={el => sectionsRef.current[2] = el} title={'EDUCACIÓN'} className="section lg:h-screen flex flex-col justify-center items-center">
+                <SectionContainer id="education" ref={el => sectionsRef.current[2] = el} title={'EDUCACIÓN'} className="section lg:h-screen flex flex-col justify-center items-center gap-5 md:gap-[52px] pb-12 md:pt-12 px-5 md:px-10">
                     <div className='grid grid-cols-1 md:grid-cols-2 lg:px-44 gap-4 md:gap-20'>
                         <div className='flex flex-col gap-4 md:gap-12  w-full'>
                             <div data-aos="fade-up" className="text-xl md:text-4xl font-bold text-center">Formación Académica</div>
@@ -194,7 +210,7 @@ export default function Portfolio({ auth, proyectos }) {
                                         <div className="w-1 bg-black dark:bg-white"></div>
                                     </div>
 
-                                    {educacion.map((item, index) => (
+                                    {educacionPortfolio.map((item, index) => (
                                         <div key={index} className="relative mb-4 md:mb-10 ml-10">
                                             <div data-aos="fade-up-right" className="absolute w-6 h-6 bg-black dark:bg-white rounded-full -left-[50px]"></div>
                                             <h3 data-aos="fade-up" data-aos-duration={item.aosDelay} className="text-lg md:text-2xl font-semibold">{item.titulo}</h3>
@@ -203,7 +219,7 @@ export default function Portfolio({ auth, proyectos }) {
                                                 {item.institucion} {item.fecha ? '(' + item.fecha + ')' : ''}
                                             </span>
                                             <p data-aos="fade-up" data-aos-duration={item.aosDelay + 400}
-                                                className="hidden xs:block text-xs md:text-base text-gray-700 dark:text-gray-300">
+                                                className="hidden xs:block text-xs md:text-base text-gray-700 dark:text-gray-300 text-justify hyphens-auto">
                                                 {item.descripcion}
                                             </p>
                                         </div>
@@ -223,14 +239,49 @@ export default function Portfolio({ auth, proyectos }) {
                                         <div className="w-1 bg-black dark:bg-white"></div>
                                     </div>
 
-                                    {experienciaLaboral.map((item, index) => (
-                                        <div key={index} className="relative mb-4 md:mb-10 ml-10">
-                                            <div data-aos="fade-up-right" className="absolute w-6 h-6 bg-black dark:bg-white rounded-full -left-[50px]"></div>
-                                            <h3 data-aos="fade-up" data-aos-duration={item.aosDelay} className="text-lg md:text-2xl font-semibold">{item.titulo}</h3>
-                                            <span data-aos="fade-up" data-aos-duration={item.aosDelay + 200} className="block text-sm md:text-md text-gray-500 dark:text-gray-400 italic mb-2">{item.empresa} {item.fecha ? '(' + item.fecha + ')' : ''}</span>
-                                            <p data-aos="fade-up" data-aos-duration={item.aosDelay + 400} className="hidden xs:block text-xs md:text-base text-gray-700 dark:text-gray-300">{item.descripcion}</p>
-                                        </div>
-                                    ))}
+                                    {experienciaLaboralPortfolio.map((item, index) => {
+                                        const contentRef = useRef(null);
+                                        const isExpanded = expandedItems[index];
+
+                                        return (
+
+                                            <div key={index} className="relative mb-4 md:mb-10 ml-10">
+                                                <div data-aos="fade-up-right" className="absolute w-6 h-6 bg-black dark:bg-white rounded-full -left-[50px]"></div>
+                                                <h3 data-aos="fade-up" data-aos-duration={item.aosDelay} className="text-lg md:text-2xl font-semibold">{item.titulo}</h3>
+                                                <span data-aos="fade-up" data-aos-duration={item.aosDelay + 200} className="block text-sm md:text-md text-gray-500 dark:text-gray-400 italic mb-2">
+                                                    {item.empresa} {item.fecha ? '(' + item.fecha + ')' : ''}
+                                                </span>
+                                                <p data-aos="fade-up" data-aos-duration={item.aosDelay + 400}
+                                                    className="hidden xs:block text-xs md:text-base text-gray-700 dark:text-gray-300 text-justify hyphens-auto">
+                                                    {item.descripcion}
+                                                </p>
+
+                                                {/* <div
+                                                    ref={contentRef}
+                                                    className={`overflow-hidden transition-all duration-500 ease-in-out`}
+                                                    style={{
+                                                        maxHeight: isExpanded ? `${contentRef.current?.scrollHeight}px` : '2rem',
+                                                        WebkitLineClamp: isExpanded ? '1' : '1',
+                                                    }}
+                                                >
+                                                    {item.descripcion.map((parrafo, i) => (
+                                                        <p key={i} data-aos="fade-up" data-aos-duration={item.aosDelay + (i * 200)} className="mt-2 text-xs md:text-base text-gray-700 dark:text-gray-300">
+                                                            {parrafo}
+                                                        </p>
+                                                    ))}
+                                                </div>
+
+                                                <button
+                                                    onClick={() => toggleExpand(index)}
+                                                    className="text-blue-500 mt-2"
+                                                >
+                                                    {isExpanded ? 'Ver menos' : 'Ver más'}
+                                                </button> */}
+                                            </div>
+
+                                        );
+
+                                    })}
 
                                 </div>
                             </div>
@@ -239,18 +290,19 @@ export default function Portfolio({ auth, proyectos }) {
                 </SectionContainer>
 
 
-                <SectionContainer id="skills" ref={el => sectionsRef.current[3] = el} title={'HABILIDADES'} className="section lg:h-screen flex justify-center items-center">
+                <SectionContainer id="skills" ref={el => sectionsRef.current[3] = el} title={'HABILIDADES'} className="section lg:h-screen flex justify-center items-center gap-5 md:gap-[52px] pb-12 md:pt-12 px-5 md:px-10">
                     <div className='flex flex-col gap-6 md:gap-14 flex-grow lg:px-44'>
                         <div className='flex flex-col gap-6'>
                             <div data-aos="fade-down" className='text-3xl text-center font-bold '>Hard</div>
                             <div className='grid grid-cols-2 md:grid-cols-2 gap-6 md:gap-14'>
-                                <SkillCategory title="Front-End" skills={['HTML5', 'CSS3', 'JavaScript', 'React', 'Tailwind CSS', 'SASS']} />
-                                <SkillCategory title="Back-End" skills={['PHP', 'Java', 'Laravel']} />
-                                <SkillCategory title="Bases de datos" skills={['SQL', 'NoSQL', 'MySQL', 'PostgreSQL', 'MongoDB', 'Oracle']} className="col-span-2" />
+                                {hardSkillsPortfolio.slice(0, 3).map((item, index) => (
+                                    <SkillCategory key={index} title={item.stack} skills={item.skills} className={`${item.stack == 'Bases de Datos' ? 'col-span-2' : ''}`} />
+                                ))}
                             </div>
                             <div className='grid grid-cols-2 md:grid-cols-2 gap-6 pt-[32px]'>
-                                <SkillCategory title="DevOps" skills={['Docker', 'Apache', 'Git']} />
-                                <SkillCategory title="Otros" skills={['Kotlin', 'XML', 'JSON']} />
+                                {hardSkillsPortfolio.slice(3, 5).map((item, index) => (
+                                    <SkillCategory key={index} title={item.stack} skills={item.skills} />
+                                ))}
                             </div>
                         </div>
 
@@ -262,25 +314,19 @@ export default function Portfolio({ auth, proyectos }) {
                 </SectionContainer>
 
 
-                <SectionContainer id="projects" ref={el => sectionsRef.current[4] = el} title={'PROYECTOS'} className="section lg:h-screen flex ">
+                <SectionContainer id="projects" ref={el => sectionsRef.current[4] = el} title={'PROYECTOS'} className="section lg:h-screen flex gap-5 md:gap-[52px] pb-12 md:pt-12 px-5 md:px-10">
                     <Proyectos proyectos={proyectos} />
                 </SectionContainer>
 
 
-                <SectionContainer id="contact" ref={el => sectionsRef.current[5] = el} title={'CONTACTO'} className="section lg:h-screen justify-center items-center">
+                <SectionContainer id="contact" ref={el => sectionsRef.current[5] = el} title={'CONTACTO'} className="section lg:h-screen justify-center items-center gap-5 md:gap-[52px] pb-12 md:pt-12 px-5 md:px-10">
                     <div className='flex h-full flex-col gap-8 md:gap-0 flex-grow justify-between items-center'>
                         <div className='max-w-2xl flex flex-col items-center text-center'>
                             <h2 data-aos="fade-up" data-aos-duration='1200' className='text-lg md:text-3xl font-bold'>
-                                ¡Haz que tus ideas cobren vida!
+                                ¡Hagamos que tus ideas cobren vida!
                             </h2>
-                            {/* <p data-aos="fade-up" data-aos-duration='1400' className='text-md font-semibold'>
-                                Este es el impulso que tu proyecto necesita para avanzar.
-                            </p> */}
-                            <p data-aos="fade-up" data-aos-duration='1600' className='text-md md:text-2xl font-semibold'>
+                            {/* <p data-aos="fade-up" data-aos-duration='1600' className='text-md md:text-2xl font-semibold'>
                                 Hagámoslo juntos
-                            </p>
-                            {/* <p data-aos="fade-up" data-aos-duration='1600' className='text-md font-semibold'>
-                                Construyamos algo increíble juntos.
                             </p> */}
                         </div>
                         <div data-aos="fade-left" className='w-full flex justify-center'>
@@ -289,7 +335,7 @@ export default function Portfolio({ auth, proyectos }) {
                         <footer className="flex flex-col gap-2 bg-white text-black dark:bg-black dark:text-white md:pt-0 md:py-16 text-center text-sm md:flex-grow-0 h-fit justify-end">
                             <p data-aos="fade-down">© 2024 Christian Rodríguez Ponce de León. Todos los derechos reservados.</p>
                             <div className="flex justify-center gap-4">
-                                {socialLinks.map((item, index) => (
+                                {socialLinksPortfolio.map((item, index) => (
                                     <SocialLink key={index} href={item.href} icon={item.icon} animation={item.animation} />
                                 ))}
                             </div>

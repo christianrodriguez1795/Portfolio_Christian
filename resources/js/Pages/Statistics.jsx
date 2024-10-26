@@ -26,7 +26,7 @@ const Statistics = () => {
   if (!data.length) {
     return (
       <AuthenticatedLayout
-        header={<h2 className="text-black dark:text-white font-semibold text-xl leading-tight">Analíticas de Visitas</h2>}
+        header={<h2 className="text-[#757575] dark:text-white font-semibold text-xl leading-tight">Analíticas de Visitas</h2>}
       >
         <Head title="Analytics" />
         <Typography variant="h5" component="div">
@@ -38,7 +38,7 @@ const Statistics = () => {
 
   return (
     <AuthenticatedLayout
-      header={<h2 className="text-black dark:text-white font-semibold text-xl leading-tight">Analíticas de Visitas</h2>}
+      header={<h2 className="text-[#757575] dark:text-white font-semibold text-xl leading-tight">Analíticas de Visitas</h2>}
     >
       <Head title="Analytics" />
 

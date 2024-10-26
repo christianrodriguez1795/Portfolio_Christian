@@ -85,10 +85,10 @@ export default function Login({ status, canResetPassword }) {
                             value={data.email}
                             onChange={(e) => setData('email', e.target.value)}
                             required
-                            className="peer pl-10 p-3 pt-5 w-full border-b-2 border-t-0 border-l-0 border-r-0 border-black 
+                            className=" inputLogin peer pl-10 p-3 pt-5 w-full border-b-2 border-t-0 border-l-0 border-r-0 border-black 
                             focus:outline-none focus:ring-0 focus:border-gray-300 dark:border-white bg-transparent dark:text-white 
                             placeholder-transparent"
-                            placeholder=" "
+                            placeholder=" "                            
                         />
                         <label
                             htmlFor="email"
@@ -111,7 +111,7 @@ export default function Login({ status, canResetPassword }) {
                         value={data.password}
                         onChange={(e) => setData('password', e.target.value)}
                         required
-                        className="peer pl-10 p-3 pt-5 w-full border-b-2 border-t-0 border-l-0 border-r-0 border-black 
+                        className="inputLogin peer pl-10 p-3 pt-5 w-full border-b-2 border-t-0 border-l-0 border-r-0 border-black 
                         focus:outline-none focus:ring-0 focus:border-gray-300 dark:border-white bg-transparent dark:text-white 
                         placeholder-transparent"
                         placeholder=" "

@@ -12,7 +12,8 @@ class Project extends Model
     protected $fillable = [
         'title',
         'description',
-        'url',
+        'urlGitHub',
+        'urlSitio',
         'image',
         'user_id',
     ];
@@ -30,5 +31,10 @@ class Project extends Model
     public function skills()
     {
         return $this->belongsToMany(Skill::class, 'project_skill');
+    }
+
+    public function details()
+    {
+        return $this->hasMany(ProjectDetail::class);
     }
 }
