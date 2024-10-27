@@ -626,6 +626,21 @@ class ProjectsTableSeeder extends Seeder
                     ]
                 ]),
             ],
+            [
+                'title' => 'The Time App',
+                'description' => 'Aplicación para comprobar el estado del tiempo mediante el consumo de la api de eltiempo.es.',
+                'urlGitHub' => 'https://github.com/christianrodriguez1795/The_Time_App',
+                'urlSitio' => 'https://thetimeapp.christianrodriguezdev.es/',
+                'image' => 'storage/app/public/proyectos/imagenes/TalentSphere-Negro.jpg',
+                'skills' => [
+                    'JavaScript',
+                    'HTML',
+                    'CSS',
+                    'Git',
+                    'Tailwind CSS'
+                ],
+                'details' => json_encode([]),
+            ],
         ];
 
         foreach ($users as $user) {

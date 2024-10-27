@@ -141,7 +141,7 @@ const Projects = ({ auth, projects }) => {
             <Table aria-label="simple table" sx={{ border: 'none' }} className=' bg-white dark:bg-[#272727]'>
               <TableHead sx={{ border: 'none' }}>
                 <TableRow className='border-b border-[#757575] dark:border-white'>
-                  <TableCell align="left" className='dark:text-white' sx={{ border: 'none', fontWeight: 'bold', display: { xs: 'table-cell' }, '@media (max-width: 600px)': { display: 'none' } }}>Imagen</TableCell>
+                  <TableCell align="left" className='dark:text-white' sx={{ border: 'none', fontWeight: 'bold', display: { xs: 'table-cell' }, '@media (max-width: 768px)': { display: 'none' } }}>Imagen</TableCell>
                   <TableCell align="left" className='dark:text-white' sx={{ border: 'none', fontWeight: 'bold' }}>Titulo</TableCell>
                   <TableCell align="left" className='dark:text-white' sx={{ border: 'none', fontWeight: 'bold', display: { xs: 'none', md: 'table-cell', } }}>Descripcion</TableCell>
                   <TableCell align="left" className='dark:text-white' sx={{ border: 'none', fontWeight: 'bold', display: { xs: 'none', md: 'table-cell', } }}>URL</TableCell>
@@ -152,7 +152,7 @@ const Projects = ({ auth, projects }) => {
                 {paginatedProjects.length > 0 ? (
                   paginatedProjects.map((project, index) => (
                     <TableRow key={project.id} className={`${index === paginatedProjects.length - 1 ? 'border-none' : 'border-b border-[#757575] dark:border-white'}`}>
-                      <TableCell align="left" sx={{ border: 'none', display: { xs: 'table-cell' }, '@media (max-width: 600px)': { display: 'none' } }}>{project.image && <img src={`${project.image}`} alt={project.title} style={{ width: 50, height: 50 }} className='rounded-md' />}</TableCell>
+                      <TableCell align="left" sx={{ border: 'none', display: { xs: 'table-cell' }, '@media (max-width: 768px)': { display: 'none' } }}>{project.image && <img src={`${project.image}`} alt={project.title} style={{ width: 50, height: 50 }} className='rounded-md' />}</TableCell>
                       <TableCell align="left" className='dark:text-white' sx={{ border: 'none' }} >{project.title}</TableCell>
                       <TableCell align="left" className='dark:text-white' sx={{ border: 'none', display: { xs: 'none', md: 'table-cell', } }}>{project.description}</TableCell>
                       <TableCell align="left" className='dark:text-white' sx={{ border: 'none', display: { xs: 'none', md: 'table-cell', } }}>

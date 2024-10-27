@@ -73,9 +73,11 @@ const Dashboard = () => {
     <AuthenticatedLayout header={<h2 className="text-[#757575] dark:text-white font-semibold text-xl leading-tight">Panel de control</h2>}>
       <Head title="Panel de control" />
 
-      <div className='w-full grid grid-cols-1 xl:grid-cols-[2fr_1fr] gap-6 p-6'>
+      <div className='w-full grid grid-cols-1 xl:grid-cols-[2fr_1fr] gap-6 md:p-11'>
         <Grid className='flex-1'>
-          <Card className='border border-[#757575] dark:border-[#2c2c2c] dark:bg-[#2c2c2c] shadow-lg'>
+          <Card className='md:border md:border-[#757575] dark:border-[#2c2c2c] dark:bg-[#2c2c2c] shadow-lg '
+            sx={{ borderRadius: 2, '@media (max-width: 768px)': { borderRadius: 0 } }}
+          >
             <CardContent>
               <Typography variant="h5" component="div" sx={{ mb: 2, textAlign: 'center', fontWeight: 'bold' }} className='dark:text-white'>
                 Visitas
