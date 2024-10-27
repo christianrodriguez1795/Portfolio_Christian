@@ -16,7 +16,6 @@ const Dashboard = () => {
     const handleThemeChange = (event) => {
       const currentTheme = event.detail.theme; // Extraer el tema desde event.detail
       setDarkMode(currentTheme === 'dark');
-      console.log(`Tema actualizado en AnotherComponent: ${currentTheme}`);
     };
 
     // Escuchar el evento themeChange
@@ -76,7 +75,7 @@ const Dashboard = () => {
 
       <div className='w-full grid grid-cols-1 xl:grid-cols-[2fr_1fr] gap-6 p-6'>
         <Grid className='flex-1'>
-          <Card className='dark:bg-[#272727]'>
+          <Card className='border border-[#757575] dark:border-[#2c2c2c] dark:bg-[#2c2c2c] shadow-lg'>
             <CardContent>
               <Typography variant="h5" component="div" sx={{ mb: 2, textAlign: 'center', fontWeight: 'bold' }} className='dark:text-white'>
                 Visitas
@@ -85,7 +84,9 @@ const Dashboard = () => {
                 <ResponsiveContainer>
                   {data.length > 0 ? (
 
-                    <BarChart data={data}>
+                    <BarChart data={data}
+                      margin={{ top: 0, right: 0, left: -30, bottom: 0 }}
+                    >
                       {/* Eliminar la malla discontinua */}
                       <CartesianGrid stroke="none" />
                       <XAxis dataKey="name" tick={{ fill: darkMode ? 'white' : 'black' }} stroke={darkMode ? 'white' : 'black'} />
@@ -113,7 +114,7 @@ const Dashboard = () => {
         </Grid>
 
         <Grid className='flex-2'>
-          <Card className='dark:bg-[#272727]' sx={{ padding: '16px', '& .MuiCardContent-root': { padding: 0 } }}>
+          <Card className='border border-[#757575] dark:border-[#2c2c2c] dark:bg-[#2c2c2c] shadow-lg' sx={{ padding: '16px', '& .MuiCardContent-root': { padding: 0 } }}>
             <CardContent>
               <div className='w-full lg:inline-flex justify-between gap-6'>
                 <div>

@@ -46,7 +46,6 @@ const Projects = ({ auth, projects }) => {
     const handleThemeChange = (event) => {
       const currentTheme = event.detail.theme; // Extraer el tema desde event.detail
       setDarkMode(currentTheme === 'dark');
-      console.log(`Tema actualizado en AnotherComponent: ${currentTheme}`);
     };
 
     // Escuchar el evento themeChange
@@ -66,55 +65,6 @@ const Projects = ({ auth, projects }) => {
     event.preventDefault();
     setCurrentPage(page);
   };
-
-  // const handleDelete = (id) => {
-  //   if (window.confirm('Are you sure you want to delete this project?')) {
-  //     axios.delete(route('projects.destroy', id))
-  //       .then(response => {
-  //         const successMessage = response.data.success || 'Project deleted successfully.';
-  //         setSnackbarMessage(successMessage);
-  //         setSnackbarSeverity('success');
-  //         setOpenSnackbar(true);
-
-  //         setProjectsList(prevProjects => {
-  //           const updatedProjects = prevProjects.filter(project => project.id !== id);
-  //           const newTotalPages = Math.ceil(updatedProjects.length / itemsPerPage);
-
-  //           // Calcular la nueva página actual
-  //           let newPage = currentPage;
-
-  //           // Si la lista se vacía, redirigir a la primera página
-  //           if (updatedProjects.length === 0) {
-  //             newPage = 1;
-  //           } else if (paginatedProjects.length === 1 && currentPage > 1) {
-  //             // Si solo había un proyecto en la página actual y no es la primera página
-  //             newPage = currentPage - 1;
-  //           } else if (currentPage > newTotalPages) {
-  //             // Si la página actual es mayor que el total de páginas, ir a la última página
-  //             newPage = newTotalPages;
-  //           }
-
-  //           // Actualiza la página y la lista de proyectos
-  //           setCurrentPage(newPage);
-  //           return updatedProjects;
-  //         });
-  //       })
-  //       .catch(error => {
-  //         let errorMessage = 'Failed to delete project. Please try again.';
-  //         if (error.response) {
-  //           const { data } = error.response;
-  //           if (data.error) {
-  //             errorMessage = data.error;
-  //           }
-  //         }
-  //         setSnackbarMessage(errorMessage);
-  //         setSnackbarSeverity('error');
-  //         setOpenSnackbar(true);
-  //       });
-  //   }
-  // };
-
-
 
   const handleDelete = () => {
     if (projectToDelete && inputValue === projectToDelete.title) {
@@ -187,7 +137,7 @@ const Projects = ({ auth, projects }) => {
             </Link>
           </div>
 
-          <TableContainer className={`border border-[#757575] dark:border-white rounded-lg shadow-lg scrollbarGenerico ${darkMode ? 'scrollbarGenerico-dark' : 'scrollbarGenerico-light'}  `}>
+          <TableContainer className={`border border-[#757575] dark:border-white rounded-lg shadow-2xl scrollbarGenerico ${darkMode ? 'scrollbarGenerico-dark' : 'scrollbarGenerico-light'}  `}>
             <Table aria-label="simple table" sx={{ border: 'none' }} className=' bg-white dark:bg-[#272727]'>
               <TableHead sx={{ border: 'none' }}>
                 <TableRow className='border-b border-[#757575] dark:border-white'>
@@ -201,21 +151,23 @@ const Projects = ({ auth, projects }) => {
               <TableBody sx={{ border: 'none' }} className='border-[#757575] dark:border-white'>
                 {paginatedProjects.length > 0 ? (
                   paginatedProjects.map((project, index) => (
-                    <TableRow key={project.id} className={`${index === paginatedProjects.length - 1 ? 'border-none' : 'border-b border-r border-[#757575] dark:border-white'}`}>
+                    <TableRow key={project.id} className={`${index === paginatedProjects.length - 1 ? 'border-none' : 'border-b border-[#757575] dark:border-white'}`}>
                       <TableCell align="left" sx={{ border: 'none', display: { xs: 'table-cell' }, '@media (max-width: 600px)': { display: 'none' } }}>{project.image && <img src={`${project.image}`} alt={project.title} style={{ width: 50, height: 50 }} className='rounded-md' />}</TableCell>
                       <TableCell align="left" className='dark:text-white' sx={{ border: 'none' }} >{project.title}</TableCell>
                       <TableCell align="left" className='dark:text-white' sx={{ border: 'none', display: { xs: 'none', md: 'table-cell', } }}>{project.description}</TableCell>
                       <TableCell align="left" className='dark:text-white' sx={{ border: 'none', display: { xs: 'none', md: 'table-cell', } }}>
-                        {project.urlGitHub && <a href={project.urlGitHub} target="_blank" className='flex justify-center text-[#757575] hover:text-[#b6b6b6c2] 
+                        <div className='flex gap-2'>
+                          {project.urlGitHub && <a href={project.urlGitHub} target="_blank" className='flex justify-center text-[#757575] hover:text-[#b6b6b6c2] 
                         dark:hover:text-white transition-all duration-300'>
-                          <FontAwesomeIcon icon={faGithub} size='2x' />
-                        </a>
-                        }
-                        {project.urlSitio && <a href={project.urlSitio} target="_blank" className='flex justify-center text-[#757575] hover:text-[#b6b6b6c2] 
+                            <FontAwesomeIcon icon={faGithub} size='2x' />
+                          </a>
+                          }
+                          {project.urlSitio && <a href={project.urlSitio} target="_blank" className='flex justify-center text-[#757575] hover:text-[#b6b6b6c2] 
                         dark:hover:text-white transition-all duration-300'>
-                          <FontAwesomeIcon icon={faEye} size='2x' />
-                        </a>
-                        }
+                            <FontAwesomeIcon icon={faEye} size='2x' />
+                          </a>
+                          }
+                        </div>
                       </TableCell>
                       <TableCell align="left" sx={{ border: 'none' }}>
                         <div className='flex gap-1 md:gap-2'>
@@ -231,14 +183,13 @@ const Projects = ({ auth, projects }) => {
                             <FontAwesomeIcon icon={faEdit} />
                           </IconButton>
                           <IconButton
-                            // onClick={() => handleDelete(project.id)} 
                             onClick={() => handleOpenModal(project)}
                             className='bg-white'
                             sx={{
                               color: '#757575',
                               transition: 'color 0.3s ease',
                               '&:hover': {
-                                color: 'red', // Color en hover
+                                color: 'red',
                               },
                             }}
                           >

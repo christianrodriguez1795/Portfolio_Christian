@@ -2,9 +2,10 @@ import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPaperPlane, faExclamationCircle } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
-import { Tooltip } from '@mui/material';
+import { CircularProgress, Tooltip } from '@mui/material';
 
 const ContactForm = ({ setSnackbar }) => {
+    const [isLoading, setIsLoading] = useState(false);
     const [form, setForm] = useState({
         name: '',
         email: '',
@@ -43,28 +44,31 @@ const ContactForm = ({ setSnackbar }) => {
         return Object.keys(newErrors).length === 0;
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        setIsLoading(true);
 
-        if (validateForm()) {
-            axios.post('/contact', form)
-                .then(response => {
-                    setSnackbar({
-                        open: true,
-                        message: response.data.success,
-                        severity: 'success'
-                    });
-                    setForm({ name: '', email: '', subject: '', message: '' });
-                })
-                .catch(error => {
-                    setSnackbar({
-                        open: true,
-                        message: error.response.data.error,
-                        severity: 'error'
-                    });
-                });
+        try {
+            if (!validateForm()) {
+                throw new Error("Formulario no válido");
+            }
+
+            const response = await axios.post('/contact', form);
+            setSnackbar({
+                open: true,
+                message: response.data.success,
+                severity: 'success',
+            });
+
+            // Limpiar el formulario después del envío exitoso
+            setForm({ name: '', email: '', subject: '', message: '' });
+        } catch (error) {
+            const errorMessage = error.response?.data?.error || error.message || 'Ocurrió un error';
+        } finally {
+            setIsLoading(false); // Se asegura de que se ejecuta siempre, al final de la petición
         }
     };
+
 
     return (
         <div className="w-full max-w-2xl px-6 md:px-6 py-0">
@@ -179,15 +183,24 @@ const ContactForm = ({ setSnackbar }) => {
                     )}
 
                 </div>
-                <button data-aos="fade-up"
-                    type="submit"
-                    className="mt-3 flex items-center justify-center w-full p-3 font-semibold text-white bg-black rounded-lg 
-                    transition-colors duration-300 ease-in-out hover:bg-[#b6b6b6c2] hover:text-black dark:text-black dark:bg-white 
-                    dark:hover:bg-[#e7e7e7c2]"
-                >
-                    <FontAwesomeIcon icon={faPaperPlane} className="mr-2" />
-                    Enviar
-                </button>
+                <div data-aos="fade-up">
+                    <button
+                        type="submit"
+                        className="mt-3 flex items-center justify-center w-full p-3 font-semibold text-white bg-black rounded-lg 
+                        transition-colors duration-700 ease-in-out hover:bg-[#b6b6b6c2] hover:text-black dark:text-black dark:bg-white 
+                        dark:hover:bg-[#e7e7e7c2]"
+                    >
+                        {!isLoading ? (
+                            <>
+                                <FontAwesomeIcon icon={faPaperPlane} className="mr-2" />
+                                Enviar
+                            </>
+
+                        ) : (
+                            <CircularProgress />
+                        )}
+                    </button>
+                </div>
             </form>
         </div>
     );

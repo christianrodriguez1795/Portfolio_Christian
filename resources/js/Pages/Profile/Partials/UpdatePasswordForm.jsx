@@ -160,13 +160,13 @@ export default function UpdatePasswordForm({ className = '' }) {
                         )}
                     </div>
                 </div>
-                <Box sx={{ display: 'flex', gap: 3 }}>
+                <Box sx={{ display: 'flex', gap: 3 }}>  
                     <button
                         type="submit"
-                        className="px-4 py-[6px] bg-black text-white dark:bg-white dark:text-black hover:bg-[#A9A9A9] 
-                        dark:hover:bg-gray-300 flex items-center mt-4 rounded-[4px] uppercase text-[14px]"
+                        className="flex md:flex-grow-0 justify-center items-center gap-2 bg-[#757575] dark:bg-[#ffffff63] text-white dark:text-black
+                          font-bold px-4 py-[6px] rounded-lg transition-all duration-500 ease-in-out hover:bg-[#b6b6b6c2] hover:text-black dark:hover:bg-white "
                     >
-                        <FontAwesomeIcon icon={faSave} className="mr-2" />
+                        <FontAwesomeIcon icon={faSave} />
                         Guardar
                     </button>
 

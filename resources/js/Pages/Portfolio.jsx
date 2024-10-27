@@ -120,9 +120,7 @@ export default function Portfolio({ auth, proyectos }) {
             ...prevState,
             [index]: !prevState[index], // Alterna el estado solo para el índice específico
         }));
-    };
-    // console.log(contentRef.current.);
-
+    }; 
 
     return (
         <>
@@ -185,11 +183,11 @@ export default function Portfolio({ auth, proyectos }) {
                                 </p>
                             </div>
                         </div>
-                        <div className='flex justify-center items-center flex-grow'>
-                            <button data-aos="fade-left"
+                        <div data-aos="fade-left" className='flex justify-center items-center flex-grow'>
+                            <button 
                                 onClick={scrollToContact}
                                 className="md:w-fit h-fit flex flex-col flex-grow md:flex-grow-0 justify-center items-center gap-2 bg-black dark:bg-[#ffffff63] text-white dark:text-black 
-                                font-bold px-6 py-2 rounded-lg transition-all duration-1000 ease-in-out hover:bg-[#b6b6b6c2] hover:text-black dark:hover:bg-white">
+                                font-bold px-6 py-2 rounded-lg transition-all duration-700 ease-in-out hover:bg-[#b6b6b6c2] hover:text-black dark:hover:bg-white">
                                 <span className='text-base'>¿Listo para dar vida a tus ideas?</span>
                                 <FontAwesomeIcon icon={faChevronDown} className="animate-bounce-slow" />
                             </button>

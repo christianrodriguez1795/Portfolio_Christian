@@ -241,7 +241,7 @@ const EditProject = ({ auth, project, skills }) => {
       {/*----------------------------------------------------------------------------------------------------------------------------------------*/}
       {/*----------------------------------------------------------------------------------------------------------------------------------------*/}
       <div className="max-w-3xl mx-auto p-6">
-        <div className='bg-white bg-opacity-0 rounded-lg relative'>
+        <div className='bg-white bg-opacity-0 md:p-5 rounded-lg relative'>
           <form data-aos="fade-down" onSubmit={handleSubmit} noValidate className="w-full flex flex-col gap-4">
             <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
               <div data-aos="fade-down">
@@ -298,122 +298,7 @@ const EditProject = ({ auth, project, skills }) => {
                   </>
                 )}
               </Box>
-            </div>
-
-            {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
-              <div data-aos="fade-right" data-aos-duration='1400' className="flex-grow relative">
-                <input
-                  type="text"
-                  id="title"
-                  name="title"
-                  value={data.title}
-                  onChange={handleChange}
-                  required
-                  className="peer pl-0 p-3 pt-5 w-full border-b-2 border-t-0 border-l-0 border-r-0 border-[#757575] bg-transparent
-                            focus:outline-none focus:ring-0 focus:border-[#2c2c2c] dark:focus:border-[#A9A9A9] dark:border-white dark:bg-transparent dark:text-white
-                            placeholder-transparent"
-                  placeholder=" "
-                />
-                <label
-                  htmlFor="title"
-                  className="absolute left-0 top-5 text-gray-700 dark:text-gray-300 transition-all duration-200
-                            transform -translate-y-6 scale-75 origin-left peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
-                            peer-focus:scale-75 peer-focus:-translate-y-6"
-                >
-                  Titulo
-                </label>
-              </div>
-              <div data-aos="fade-left" data-aos-duration='1400' className='flex items-center z-10'>
-                <CustomSelectMultiple
-                  options={skills.map(skill => ({ label: skill.name, value: skill.id }))}
-                  value={data.skill_id}
-                  onChange={(value) => setData(prevData => ({ ...prevData, skill_id: value }))}
-                  label="Habilidades"
-                  error={errors.skill_id}
-                  multiple
-                />
-              </div>
-            </div>
-
-            <div data-aos="fade-right" data-aos-duration='1600' className="relative">
-              <textarea
-                id="description"
-                name="description"
-                rows="4"
-                value={data.description}
-                onChange={handleChange}
-                required
-                className="peer pl-0 p-3 mt-5 pt-0 w-full border-b-2 border-t-0 border-l-0 border-r-0 border-[#757575] bg-transparent
-                          focus:outline-none focus:ring-0 focus:border-[#2c2c2c] dark:focus:border-[#A9A9A9] dark:border-white dark:bg-transparent dark:text-white
-                          placeholder-transparent resize-none scrollbarGenerico scrollbarGenerico-light"
-                placeholder=" "
-              />
-              <label
-                htmlFor="description"
-                className="absolute left-0 top-5 text-gray-700 dark:text-gray-300 transition-all duration-200
-                          transform -translate-y-6 scale-75 origin-left peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
-                          peer-focus:scale-75 peer-focus:-translate-y-6"
-              >
-                Descripcion
-              </label>
-            </div>
-
-            <div className='flex gap-4 md:gap-6'>
-              <div data-aos="fade-right" data-aos-duration='2000' className="relative flex-grow">
-                <input
-                  type="text"
-                  id="urlGitHub"
-                  name="urlGitHub"
-                  value={data.urlGitHub || ''}
-                  onChange={handleChange}
-                  required
-                  className="peer pl-0 p-3 pt-5 w-full border-b-2 border-t-0 border-l-0 border-r-0 border-[#757575] bg-transparent
-                  focus:outline-none focus:ring-0 focus:border-[#2c2c2c] dark:focus:border-[#A9A9A9] dark:border-white dark:bg-transparent dark:text-white
-                  placeholder-transparent focus:placeholder-gray-500 peer-focus:placeholder-gray-500 transition-colors duration-300 ease-in-out"
-                  placeholder="http://"
-                />
-                <label
-                  htmlFor="urlGitHub"
-                  className="absolute left-0 top-5 text-gray-700 dark:text-gray-300 transition-all duration-200
-                  transform -translate-y-6 scale-75 origin-left peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
-                  peer-focus:scale-75 peer-focus:-translate-y-6"
-                >
-                  URL GitHub
-                </label>
-              </div>
-
-              <div data-aos="fade-left" data-aos-duration='2000' className="relative flex-grow" >
-                <input
-                  type="text"
-                  id="urlSitio"
-                  name="urlSitio"
-                  value={data.urlSitio || ''}
-                  onChange={handleChange}
-                  required
-                  className="peer pl-0 p-3 pt-5 w-full border-b-2 border-t-0 border-l-0 border-r-0 border-[#757575] bg-transparent
-                  focus:outline-none focus:ring-0 focus:border-[#2c2c2c] dark:focus:border-[#A9A9A9] dark:border-white dark:bg-transparent dark:text-white
-                  placeholder-transparent focus:placeholder-gray-500 peer-focus:placeholder-gray-500 transition-colors duration-300 ease-in-out"
-                  placeholder="http://"
-                />
-                <label
-                  htmlFor="urlSitio"
-                  className="absolute left-0 top-5 text-gray-700 dark:text-gray-300 transition-all duration-200
-                          transform -translate-y-6 scale-75 origin-left peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0
-                          peer-focus:scale-75 peer-focus:-translate-y-6"
-                >
-                  URL Sitio
-                </label>
-              </div>
-            </div>
-            <div data-aos="fade-up" data-aos-duration='2300'>
-              <button
-                onClick={handleOpenDetails}
-                className="w-full flex flex-grow md:flex-grow-0 justify-center items-center gap-2 bg-[#757575] dark:bg-[#ffffff63] text-white dark:text-black
-                          font-bold px-4 py-4 rounded-lg transition-all duration-500 ease-in-out hover:bg-[#b6b6b6c2] hover:text-black dark:hover:bg-white text-xl"
-              >
-                Detalles
-              </button>
-            </div> */}
+            </div>           
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
               <TextInput

@@ -19,9 +19,7 @@ const Statistics = () => {
   };
 
   const data = visits.map(visit => visit.visits);
-  const labels = visits.map(visit => pageTranslations[visit.page] || visit.page);
-
-  console.log(data, labels); // Verifica los datos en la consola
+  const labels = visits.map(visit => pageTranslations[visit.page] || visit.page);  
 
   if (!data.length) {
     return (

@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleLeft, faAngleRight, faEdit, faTrash, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 const Messages = ({ auth, messages }) => {
+  const [darkMode, setDarkMode] = useState(localStorage.getItem('theme') === 'dark');
   const [messagesList, setMessagesList] = useState(messages);
   const [itemsPerPage, setItemsPerPage] = useState(window.innerWidth < 768 ? 5 : 6);
   const [currentPage, setCurrentPage] = useState(1);
@@ -81,37 +82,46 @@ const Messages = ({ auth, messages }) => {
 
       <div className='max-w-6xl mx-auto p-6'>
         <div className='p-5'>
-          <TableContainer component={Paper} className='shadow-lg dark:bg-[#272727] dark:text-white'>
-            <Table aria-label="simple table">
-              <TableHead className='dark:text-white'>
-                <TableRow >
-                  <TableCell align="left" style={{ width: '150px', fontWeight: 'bold' }} className='dark:text-white'>Fecha</TableCell>
-                  <TableCell align="left" style={{ width: '150px', fontWeight: 'bold' }} className='dark:text-white'>Nombre</TableCell>
-                  <TableCell align="left" style={{ width: '200px', fontWeight: 'bold' }} className='dark:text-white'>Correo Electrónico</TableCell>
-                  <TableCell align="left" style={{ width: '200px', fontWeight: 'bold', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '200px' }} className='dark:text-white'>Asunto</TableCell>
-                  <TableCell align="left" style={{ width: '400px', fontWeight: 'bold', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '400px' }} className='dark:text-white'>Mensaje</TableCell>
+          <TableContainer className={`border border-[#757575] dark:border-white rounded-lg shadow-2xl scrollbarGenerico ${darkMode ? 'scrollbarGenerico-dark' : 'scrollbarGenerico-light'}  `}>
+            <Table aria-label="simple table" sx={{ border: 'none' }} className=' bg-white dark:bg-[#272727]'>
+              <TableHead className='dark:text-white' sx={{ border: 'none' }}>
+                <TableRow className='border-b border-[#757575] dark:border-white'>
+                  <TableCell align="left" sx={{ width: '150px', fontWeight: 'bold', border: 'none', }} className='dark:text-white'>Fecha</TableCell>
+                  <TableCell align="left" sx={{ width: '150px', fontWeight: 'bold', border: 'none', }} className='dark:text-white'>Nombre</TableCell>
+                  <TableCell align="left" sx={{ width: '200px', fontWeight: 'bold', border: 'none', }} className='dark:text-white'>Correo Electrónico</TableCell>
+                  <TableCell align="left" sx={{ width: '200px', fontWeight: 'bold', border: 'none', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '200px' }} className='dark:text-white'>Asunto</TableCell>
+                  <TableCell align="left" sx={{ width: '400px', fontWeight: 'bold', border: 'none', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '400px' }} className='dark:text-white'>Mensaje</TableCell>
                 </TableRow>
               </TableHead>
-              <TableBody>
+              <TableBody sx={{ border: 'none' }} className='border-[#757575] dark:border-white'>
                 {paginatedMessages.length > 0 ? (
-                  paginatedMessages.map((message) => (
-                    <TableRow key={message.id} >
-                      <TableCell align="left" className='dark:text-white'>
+                  paginatedMessages.map((message, index) => (
+                    <TableRow key={message.id} className={`${index === paginatedMessages.length - 1 ? 'border-none' : 'border-b border-[#757575] dark:border-white'}`}>
+                      {/* <TableCell align="left" className='dark:text-white' sx={{ border: 'none' }}>
                         {isToday(new Date(message.created_at)) ? 'Hoy' : new Date(message.created_at).toLocaleDateString()}
+                      </TableCell> */}
+
+                      <TableCell align="left" className="dark:text-white" sx={{ border: 'none' }}>
+                        {new Date(message.created_at).toDateString() === new Date().toDateString()
+                          ? 'Hoy'
+                          : new Date(message.created_at).toDateString() === new Date(new Date().setDate(new Date().getDate() - 1)).toDateString()
+                            ? 'Ayer'
+                            : new Date(message.created_at).toLocaleDateString()
+                        }
                       </TableCell>
-                      <TableCell align="left" className='dark:text-white'>{message.name}</TableCell>
-                      <TableCell align="left" className='dark:text-white'>{message.email}</TableCell>
-                      <TableCell align="left" style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '200px' }} className='dark:text-white'>
+                      <TableCell align="left" className='dark:text-white' sx={{ border: 'none' }}>{message.name}</TableCell>
+                      <TableCell align="left" className='dark:text-white' sx={{ border: 'none' }}>{message.email}</TableCell>
+                      <TableCell align="left" sx={{ border: 'none', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '200px' }} className='dark:text-white'>
                         {message.subject}
                       </TableCell>
-                      <TableCell align="left" style={{ whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '400px' }} className='dark:text-white'>
+                      <TableCell align="left" sx={{ border: 'none', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', maxWidth: '400px' }} className='dark:text-white'>
                         {message.message}
                       </TableCell>
                     </TableRow>
                   ))
                 ) : (
                   <TableRow>
-                    <TableCell colSpan={6} align="center" className='dark:text-white'>No hay mensajes</TableCell>
+                    <TableCell colSpan={6} align="center" className='dark:text-white' sx={{ border: 'none' }}>No hay mensajes</TableCell>
                   </TableRow>
                 )}
               </TableBody>

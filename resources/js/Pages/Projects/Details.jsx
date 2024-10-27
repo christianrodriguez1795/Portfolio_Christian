@@ -14,7 +14,6 @@ function Details({ project }) {
     return localTheme ? localTheme === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
   });
   const sectionsRef = useRef([]);
-  console.log(sectionsRef);
   // Reiniciamos el array de referencias cada vez que el componente se renderiza
   sectionsRef.current = [];
   const addSectionRef = (el) => {
@@ -24,13 +23,9 @@ function Details({ project }) {
     }
   };
 
-  const videoRef = useRef(null);
   const scrollTimeout = useRef(null);
   // Decodificar detalles JSON
   const projectDetails = project.details.length > 0 ? JSON.parse(project.details[0].details) : null;
-  let sectionIndex = 0;
-  console.log('project');
-  console.log(project);
 
   // Manejar redimensionamiento de la ventana
   useEffect(() => {
@@ -59,9 +54,6 @@ function Details({ project }) {
         const rect = section.getBoundingClientRect();
         return rect.top >= 0 && rect.top < window.innerHeight;
       });
-      console.log(currentSectionIndex);
-      console.log(sectionsRef.current.length - 1);
-
 
       if (direction === 'down' && currentSectionIndex < sectionsRef.current.length - 1) {
         sectionsRef.current[currentSectionIndex + 1].scrollIntoView({ behavior: 'smooth' });
@@ -129,18 +121,31 @@ function Details({ project }) {
           <div className='w-full flex justify-center items-center pt-5 xs:pt-0'>
             <div className='max-w-4xl w-full flex flex-col gap-5 md:gap-8 justify-center items-center'>
 
-              <div className='w-full flex justify-center'>
-                <div data-aos="fade-up" data-aos-duration='1400'
-                  className='max-w-4xl min-h-[200px] md:min-h-[532.83px] w-full flex justify-center items-center rounded-lg 
-                border dark:border-white'
+              <div className="w-full flex justify-center">
+                <a
+                  href={project.urlSitio}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  data-aos="fade-up"
+                  data-aos-duration="1400"
+                  className="relative max-w-4xl min-h-[200px] md:min-h-[532.83px] w-full flex justify-center items-center rounded-lg  shadow-lg
+                  border dark:border-white overflow-hidden group"
                 >
                   <img
                     src={project.image}
                     alt={project.title}
-                    className="w-full h-full object-cover rounded-lg"
+                    className="w-full h-full object-cover rounded-lg transition-all duration-700 ease-in-out group-hover:brightness-50"
                   />
-                </div>
+
+                  <div
+                    className="absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 bg-black/10 transition-all duration-1000 ease-in-out"
+                  >
+                    <FontAwesomeIcon icon={faEye} className="text-white text-5xl mb-2" />
+                    <span className="text-white text-3xl font-bold">Visitar</span>
+                  </div>
+                </a>
               </div>
+
 
               <p data-aos="fade-up" data-aos-duration='1800' className="text-base lg:text-xl text-black dark:text-white 
               text-justify hyphens-auto">
@@ -167,8 +172,6 @@ function Details({ project }) {
             </div>
           </div>
         </SectionContainer>
-        {console.log(projectDetails)}
-
 
         {projectDetails && (
           <>
@@ -320,7 +323,7 @@ function Details({ project }) {
                         )}
                     </ul>
                     <div className='flex flex-col md:flex-row justify-center gap-6 items-center w-full'>
-                      {project.urlSitio && (
+                      {/* {project.urlSitio && (
                         <a data-aos={project.urlGitHub ? 'fade-up-right' : 'fade-up'}
                           data-aos-duration='1600'
                           href={project.urlSitio}
@@ -331,20 +334,21 @@ function Details({ project }) {
                           <FontAwesomeIcon icon={faEye} size='2x' className="animate-pulse" />
                           <span className='text-2xl animate-pulse'>Visitar</span>
                         </a>
-                      )}
+                      )} */}
 
                       {project.urlGitHub && (
-                        <a
-                          data-aos={project.urlSitio ? 'fade-up-left' : 'fade-up'}
-                          data-aos-duration='1600'
-                          href={project.urlGitHub}
-                          target='_blank'
-                          className="w-full flex flex-grow md:flex-grow-0 justify-center items-center gap-2 bg-black dark:bg-[#ffffff63] 
+                        <div data-aos={project.urlSitio ? 'fade-up-left' : 'fade-up'}
+                          data-aos-duration='1600' className='w-full'>
+                          <a
+                            href={project.urlGitHub}
+                            target='_blank'
+                            className="w-full flex flex-grow md:flex-grow-0 justify-center items-center gap-2 bg-[#757575] dark:bg-[#ffffff63] 
                           text-white dark:text-black font-bold px-6 py-6 rounded-lg  hover:bg-[#b6b6b6c2] hover:text-black 
                           dark:hover:bg-white transition-all duration-1000 ease-in-out">
-                          <FontAwesomeIcon icon={faGithub} size='2x' className="animate-pulse " />
-                          <span className='text-2xl animate-pulse'>GitHub</span>
-                        </a>
+                            <FontAwesomeIcon icon={faGithub} size='2x' className="animate-pulse " />
+                            <span className='text-2xl animate-pulse'>GitHub</span>
+                          </a>
+                        </div>
                       )}
 
                     </div>

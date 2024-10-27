@@ -55,9 +55,7 @@ const CreateProject = ({ auth, skills }) => {
 
   };
 
-  const handleDetailChange = (index, field, value, detail) => {
-    console.log('detail:', detail);
-
+  const handleDetailChange = (index, field, value, detail) => { 
     const label = typeof value === 'number'
       ? detailsOptions.find(option => option.id === value)?.name || ''
       : detail.category;
@@ -78,9 +76,7 @@ const CreateProject = ({ auth, skills }) => {
       }
 
       return updatedDetails;
-    });
-
-    console.log(details);
+    });   
   };
 
   const handleAddDescription = (index) => {
@@ -274,26 +270,7 @@ const CreateProject = ({ auth, skills }) => {
     } finally {
       setOpenSnackbar(true);
     }
-  };
-
-  console.log(skills);
-
-
-
-  const modalStyle = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: '70%',
-    maxHeight: '100%',
-    boxShadow: 24,
-    p: 4,
-    borderRadius: 2,
-    display: 'flex',
-    flexDirection: 'column',
-    gap: 4,
-  };
+  }; 
 
   return (
     <AuthenticatedLayout user={auth.user} header={<h2 className="text-[#757575] dark:text-white font-semibold text-xl leading-tight">Añadir proyecto</h2>}>
@@ -305,7 +282,7 @@ const CreateProject = ({ auth, skills }) => {
       {/*----------------------------------------------------------------------------------------------------------------------------------------*/}
       {/*----------------------------------------------------------------------------------------------------------------------------------------*/}
       <div className="max-w-3xl mx-auto p-6">
-        <div className='bg-white bg-opacity-0 p-5 rounded-lg relative '>
+        <div className='bg-white bg-opacity-0 md:p-5 rounded-lg relative '>
           <form data-aos="fade-down" onSubmit={handleSubmit} noValidate className="w-full flex flex-col gap-4 ">
             <Box sx={{ display: 'flex', justifyContent: 'space-between' }}>
               <div data-aos="fade-down">
